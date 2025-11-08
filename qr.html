@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout — QR Payment | OTT Wallah</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    body { background: linear-gradient(120deg,#0a0a0a,#111,#151515); color:#fff; }
+    .wrap { max-width: 1100px; margin: 40px auto; padding: 0 16px; }
+    .grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; }
+    @media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
+    .panel { background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:22px; backdrop-filter: blur(10px); }
+    .head { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+    .title { font-size:22px; font-weight:900; letter-spacing:.3px; }
+    .muted { opacity:.75; }
+    .line { height:1px; background:rgba(255,255,255,.1); margin:12px 0 18px; }
+    .row { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; }
+    .secondary { background:#0f0f0f; border:1px solid #222; padding:12px 14px; border-radius:10px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .btn, .btn-red, .btn-ghost { font-weight:800; border-radius:10px; padding:12px 14px; display:inline-flex; align-items:center; justify-content:center; gap:8px; border:1px solid rgba(255,255,255,.15); }
+    .btn { background:rgba(255,255,255,.08); color:#fff; }
+    .btn-ghost { background:transparent; }
+    .btn-red { background:#e11d2e; border-color:#e11d2e; color:#fff; }
+    .btn:hover { filter: brightness(1.08); }
+    .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+    .qr-box { background:#000; border:1px solid #222; border-radius:14px; padding:16px; display:grid; place-items:center; }
+    .qr-box img { width: 260px; max-width: 100%; height:auto; border-radius:10px; }
+    .copy { cursor:pointer; }
+    .badge { font-size:12px; padding:4px 8px; border-radius:999px; background:#111; border:1px solid #222; }
+    .timer { font-weight:900; color:#e11d2e; }
+    .list { display:flex; flex-direction:column; gap:10px; }
+    .item { background:#0f0f0f; border:1px solid #222; border-radius:10px; padding:10px 12px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .price { font-weight:900; color:#ffd166; }
+    .fine { font-size:12px; opacity:.7; }
+    .upl { border:1px dashed #444; background:#0b0b0b; border-radius:10px; padding:14px; text-align:center; }
+    input.input, textarea.input { width:100%; background:#0f0f0f; border:1px solid #222; color:#fff; padding:12px 14px; border-radius:10px; outline:none; }
+    textarea.input { resize:vertical; min-height:90px; }
+    .success { color:#27d17f; }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <div class="brand">
+      <div class="brand-badge">OW</div>
+      <div>
+        <div style="font-size:18px;font-weight:900;">OTT WALLAH</div>
+        <div class="small">Secure QR Checkout</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <a class="btn" href="index.html">Home</a>
+      <a class="btn" href="cart.html">Cart</a>
+      <a class="btn" href="login.html">Login</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="grid">
+
+    <!-- LEFT: Summary + Items -->
+    <section class="panel">
+      <div class="head">
+        <div class="title">Order Summary</div>
+        <span id="countBadge" class="badge">0 items</span>
+      </div>
+
+      <div id="items" class="list"></div>
+
+      <div class="line"></div>
+
+      <div class="row">
+        <div class="muted">Subtotal</div>
+        <div id="subtotal" class="price">₹0</div>
+      </div>
+      <div class="row">
+        <div class="muted">Convenience</div>
+        <div class="muted">₹0</div>
+      </div>
+      <div class="row" style="font-size:20px;">
+        <div><strong>Total Payable</strong></div>
+        <div id="grand" class="price">₹0</div>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="row">
+        <div class="muted">Complete payment in</div>
+        <div class="timer" id="timer">15:00</div>
+      </div>
+      <p class="fine">Note: If timer ends, order may auto-cancel. You can re-initiate checkout anytime.</p>
+    </section>
+
+    <!-- RIGHT: QR + UPI + Confirm -->
+    <section class="panel">
+      <div class="title">Scan & Pay (UPI)</div>
+      <p class="muted">Scan the QR with any UPI app, or use the UPI ID below.</p>
+
+      <div class="grid-2" style="margin-top:14px;">
+        <div class="qr-box">
+          <!-- ✅ Put your QR image at /uploads/qr.png -->
+          <img src="/uploads/qr.png" alt="UPI QR">
+        </div>
+        <div>
+          <div class="secondary">
+            <div>
+              <div class="muted">UPI ID</div>
+              <div id="upi" style="font-weight:900; letter-spacing:.3px;">rajsarswata1@oksbi</div>
+            </div>
+            <button class="btn copy" onclick="copyText('upi')">Copy</button>
+          </div>
+
+          <div class="secondary" style="margin-top:10px;">
+            <div>
+              <div class="muted">Amount</div>
+              <div id="amt" style="font-weight:900;">₹0</div>
+            </div>
+            <button class="btn copy" onclick="copyAmount()">Copy</button>
+          </div>
+
+          <div style="margin-top:10px;">
+            <a id="openUPI" class="btn-red" href="#" target="_blank" rel="noopener">Pay using UPI App</a>
+            <div class="fine" style="margin-top:6px;">Opens supported UPI apps with amount pre-filled.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="title" style="font-size:18px;">Payment Confirmation</div>
+      <div class="grid-2" style="margin-top:10px;">
+        <input id="txn" class="input" placeholder="Enter UPI Ref/Transaction ID (optional)">
+        <input id="name" class="input" placeholder="Your name (for faster verification)">
+      </div>
+      <div style="margin-top:10px;">
+        <input id="note" class="input" placeholder="Note (plan preference, email for delivery, etc.)">
+      </div>
+
+      <div class="upl" style="margin-top:12px;">
+        <div class="muted" style="margin-bottom:6px;">Upload payment screenshot (optional)</div>
+        <input id="ss" type="file" accept="image/*">
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap: wrap;">
+        <button class="btn-red" onclick="markPaid()">I’ve Paid</button>
+        <button class="btn" onclick="sendWhatsApp()">Send on WhatsApp</button>
+        <a class="btn-ghost" href="cart.html">Back to Cart</a>
+      </div>
+
+      <p id="status" class="fine" style="margin-top:10px;"></p>
+    </section>
+
+  </div>
+</div>
+
+<script src="./data.js"></script>
+<script>
+  // ---- Read query params ----
+  const params = new URLSearchParams(location.search);
+  const amountParam = Number(params.get("amount")||0);
+  const itemsParam = params.get("items");
+  let items = [];
+  try { items = itemsParam ? JSON.parse(decodeURIComponent(itemsParam)) : []; } catch(e){ items = []; }
+
+  // ---- Build item list from CATALOG ----
+  const itemsEl = document.getElementById("items");
+  const countBadge = document.getElementById("countBadge");
+  const subtotalEl = document.getElementById("subtotal");
+  const grandEl = document.getElementById("grand");
+  const amtEl = document.getElementById("amt");
+
+  // If cart exist in localStorage, prefer exact current prices
+  const cart = JSON.parse(localStorage.getItem('cart')||'[]');
+  let enriched = items.map(c => {
+    const p = window.CATALOG.find(x=>x.id===c.id) || {name:c.id, price:0, billing:"", logo:""};
+    return { ...c, name: p.name, price: p.price, billing: p.billing, logo: p.logo };
+  });
+
+  // Fallback: if amount given use it; else sum from items
+  const computedTotal = enriched.reduce((s,x)=> s + (x.price * (x.qty||1)), 0);
+  const total = amountParam || computedTotal;
+
+  // Render
+  countBadge.textContent = `${enriched.length} items`;
+  itemsEl.innerHTML = enriched.map(it => `
+    <div class="item">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="${it.logo}" alt="" style="width:36px; height:36px; object-fit:contain; background:#111; border:1px solid #222; border-radius:8px;">
+        <div>
+          <div style="font-weight:800">${it.name}</div>
+          <div class="fine">Qty: ${it.qty||1}</div>
+        </div>
+      </div>
+      <div class="price">₹${(it.price*(it.qty||1))}</div>
+    </div>
+  `).join("");
+
+  subtotalEl.textContent = `₹${total}`;
+  grandEl.textContent = `₹${total}`;
+  amtEl.textContent = `₹${total}`;
+
+  // ---- Copy helpers ----
+  function copyText(id){
+    const t = document.getElementById(id).textContent.trim();
+    navigator.clipboard.writeText(t);
+    flash('Copied!');
+  }
+  function copyAmount(){
+    const t = amtEl.textContent.replace('₹','').trim();
+    navigator.clipboard.writeText(t);
+    flash('Amount copied!');
+  }
+  function flash(msg){
+    const s = document.getElementById('status');
+    s.innerHTML = `<span class="success">${msg}</span>`;
+    setTimeout(()=> s.textContent='', 1800);
+  }
+
+  // ---- Deep link for UPI intent ----
+  // Edit UPI ID below if needed
+  const UPI_ID = "rajsarswata1@oksbi";
+  const NAME = "OTT+Wallah";
+  const AMT = total;
+  const NOTE = "OTT+Wallah+Order";
+
+  const upiURL = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(NAME)}&am=${encodeURIComponent(AMT)}&cu=INR&tn=${encodeURIComponent(NOTE)}`;
+  document.getElementById("openUPI").href = upiURL;
+
+  // ---- Timer 15:00 ----
+  let seconds = 15*60;
+  const timerEl = document.getElementById("timer");
+  const tick = () => {
+    const m = Math.floor(seconds/60).toString().padStart(2,'0');
+    const s = (seconds%60).toString().padStart(2,'0');
+    timerEl.textContent = `${m}:${s}`;
+    if (seconds>0) { seconds--; setTimeout(tick, 1000); }
+    else { document.getElementById('status').innerHTML = 'Timer ended. You can still pay and confirm.'; }
+  };
+  tick();
+
+  // ---- Mark Paid (local only; you’ll verify in WhatsApp/Admin) ----
+  function markPaid(){
+    const txn = document.getElementById('txn').value.trim();
+    const name = document.getElementById('name').value.trim();
+    const note = document.getElementById('note').value.trim();
+    // You can send this to backend via fetch if you want to record.
+
+    // Clear cart locally (optional)
+    localStorage.setItem('cart','[]');
+    flash('Marked as paid locally ✅');
+
+    // Redirect to thank you page (optional)
+    setTimeout(()=> location.href = 'thankyou.html', 700);
+  }
+
+  // ---- WhatsApp message with order summary ----
+  function sendWhatsApp(){
+    const txn = document.getElementById('txn').value.trim() || 'N/A';
+    const name = document.getElementById('name').value.trim() || 'Customer';
+    const note = document.getElementById('note').value.trim() || '';
+    const lines = enriched.map(i => `• ${i.name} × ${i.qty||1} = ₹${i.price*(i.qty||1)}`).join('%0A');
+
+    const msg = `
+Hello, I have completed the payment.%0A
+Name: ${encodeURIComponent(name)}%0A
+Total: ₹${encodeURIComponent(total)}%0A
+Txn/Ref: ${encodeURIComponent(txn)}%0A
+Items:%0A${lines}%0A%0A
+Note: ${encodeURIComponent(note)}
+`.trim();
+
+    // change to your WhatsApp number
+    const phone = '919837777006'; // +91 9837777006
+    window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+  }
+</script>
+</body>
+</html>

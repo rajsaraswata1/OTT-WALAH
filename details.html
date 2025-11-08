@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OTT Wallah — Subscription Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+
+    /* =============== PAGE LAYOUT =============== */
+    .details-container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 30px;
+    }
+
+    .details-card {
+      background: #0d0d0d;
+      border: 1px solid #222;
+      padding: 40px;
+      border-radius: 18px;
+      display: flex;
+      gap: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.5);
+      flex-wrap: wrap;
+    }
+
+    .logo-box {
+      width: 360px;
+      height: 230px;
+      background: #000;
+      border-radius: 16px;
+      border: 1px solid #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* ============ INFO AREA ============== */
+    .title {
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .tags {
+      margin-top: 10px;
+      color: #bbb;
+      font-size: 15px;
+    }
+
+    .desc {
+      margin-top: 20px;
+      opacity: .8;
+      line-height: 1.7;
+    }
+
+    /* ============ PRICE BOX ============== */
+    .price-box {
+      margin-top: 25px;
+      background: #111;
+      padding: 20px;
+      width: 260px;
+      border-radius: 14px;
+      border: 1px solid #333;
+    }
+
+    .price-main {
+      font-size: 30px;
+      font-weight: 800;
+      color: #ff2b2b;
+    }
+
+    .billing {
+      opacity: .7;
+    }
+
+    /* ========== BUTTONS ============ */
+    .btn-red {
+      background: #e11d2e;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 16px;
+      width: 200px;
+      text-align: center;
+    }
+
+    .btn-red:hover {
+      filter: brightness(1.15);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #e11d2e;
+      padding: 14px 22px;
+      border-radius: 10px;
+      color: #e11d2e;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 200px;
+      text-align: center;
+    }
+
+    .btn-outline:hover {
+      background: #e11d2e;
+      color: white;
+    }
+
+    /* BONUS EXTRA SECTION BELOW */
+    .features-box {
+      margin-top: 50px;
+      padding: 30px;
+      background: #0f0f0f;
+      border-radius: 16px;
+      border: 1px solid #222;
+    }
+
+    .features-box h2 {
+      font-size: 26px;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    ul.features-list {
+      line-height: 1.9;
+      opacity: .85;
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+<!-- ✅ Header -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="brand">
+      <div class="brand-badge">OW</div>
+      <div>
+        <div style="font-size:18px; font-weight:900;">OTT WALLAH</div>
+        <div class="small">Premium streaming • Tools • Learning</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <a class="btn" href="cart.html">Cart</a>
+      <a class="btn" href="dashboard.html">Dashboard</a>
+      <a class="btn" href="/logout">Logout</a>
+    </div>
+  </div>
+</header>
+
+
+<!-- ✅ MAIN DETAILS BOX -->
+<div class="details-container">
+  <div id="detailsBox"></div>
+</div>
+
+
+<!-- ✅ Feature Section -->
+<div class="details-container">
+  <div class="features-box">
+    <h2>✅ What You Will Get</h2>
+    <ul class="features-list">
+      <li>✅ 100% Genuine Subscription</li>
+      <li>✅ Instant Activation after Payment</li>
+      <li>✅ Watch on Mobile / TV / Laptop (depends on plan)</li>
+      <li>✅ 24×7 Support via WhatsApp</li>
+      <li>✅ Secure UPI QR Payment</li>
+      <li>✅ Full Refund if service not activated</li>
+    </ul>
+  </div>
+</div>
+
+
+
+<script src="data.js"></script>
+
+<script>
+
+  // ✅ URL से ID लो
+  const ID = new URLSearchParams(window.location.search).get("id");
+  const item = window.CATALOG.find(x => x.id === ID);
+
+  if (!item) {
+    document.getElementById("detailsBox").innerHTML = "<h2>Invalid Product</h2>";
+  } 
+  else {
+
+    document.getElementById("detailsBox").innerHTML = `
+      <div class="details-card">
+
+        <div class="logo-box">
+          <img src="${item.logo}">
+        </div>
+
+        <div style="flex:1">
+
+          <div class="title">${item.name}</div>
+
+          <div class="tags">${item.tags.join(" • ")}</div>
+
+          <p class="desc">
+            ${item.name} subscription gives you premium access to unlimited entertainment,
+            movies, series, tools or courses depending on the plan.  
+            Enjoy fastest delivery with secure UPI QR checkout.
+          </p>
+
+          <div class="price-box">
+            <div class="price-main">₹${item.price}</div>
+            <div class="billing">${item.billing}</div>
+          </div>
+
+          <button class="btn-red" onclick="addToCart('${item.id}')">Add to Cart</button>
+          <button class="btn-outline" onclick="buyNow(${item.price})">Buy Now</button>
+
+        </div>
+      </div>
+    `;
+  }
+
+
+  // ✅ LOGIN CHECK before cart
+  async function addToCart(id){
+    let res = await fetch("/auth/check");
+    let data = await res.json();
+
+    if (!data.loggedIn){
+      alert("Please login first!");
+      return location.href = "login.html";
+    }
+
+    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    if(!cart.find(x=>x.id===id)){
+      cart.push({id, qty:1});
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert("✅ Added to cart");
+  }
+
+  // ✅ BUY NOW (login required)
+  async function buyNow(amount){
+    let res = await fetch("/auth/check");
+    let data = await res.json();
+
+    if (!data.loggedIn){
+      return location.href = "login.html";
+    }
+
+    location.href = `qr.html?amount=${amount}`;
+  }
+
+</script>
+
+</body>
+</html>
+

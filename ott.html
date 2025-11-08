@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OTT Platforms — OTT Wallah</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style.css">
+
+  <style>
+    .page-hero{
+      padding:60px 20px 20px;
+      text-align:center;
+    }
+    .page-hero h1{
+      font-size:38px;
+      font-weight:900;
+    }
+    .page-hero p{
+      opacity:.75;
+      max-width:700px;
+      margin:10px auto 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="brand">
+      <div class="brand-badge">OW</div>
+      <div>
+        <div style="font-size:18px;font-weight:900;">OTT WALLAH</div>
+        <div class="small">Premium Streaming</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <a class="btn" href="index.html">Home</a>
+      <a class="btn" href="cart.html">Cart</a>
+      <a class="btn" href="login.html">Login</a>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <h1>OTT Platforms</h1>
+  <p>Explore 40+ OTT premium platforms — Netflix, Prime, Hotstar, SonyLIV, Zee5 & many more.</p>
+</section>
+
+<!-- SEARCH + SORT -->
+<div class="container search-row">
+  <input id="q" class="input" placeholder="Search OTT platform...">
+  <select id="sort" class="filter">
+    <option value="rel">Featured</option>
+    <option value="lh">Price: Low → High</option>
+    <option value="hl">Price: High → Low</option>
+    <option value="az">Name: A → Z</option>
+  </select>
+</div>
+
+<!-- GRID -->
+<section class="container section">
+  <div id="grid" class="grid"></div>
+</section>
+
+<script src="./data.js"></script>
+<script>
+  const grid = document.getElementById("grid");
+  const q = document.getElementById("q");
+  const sort = document.getElementById("sort");
+
+  function cardHTML(item){
+    return `
+      <div class="card">
+        <span class="ribbon">OTT</span>
+        <img class="logo" src="${item.logo}">
+        <div class="title">${item.name}</div>
+        <div class="small">${item.tags.join(" • ")}</div>
+        <div class="price">₹${item.price}${item.billing}</div>
+        <div class="card-actions">
+          <a class="link" href="details.html?id=${item.id}">View details</a>
+          <button class="btn" onclick="addToCart('${item.id}')">Add to cart</button>
+        </div>
+      </div>
+    `;
+  }
+
+async function addToCart(id) {
+
+  // ✅ Check login using server session
+  let user = await fetch("/user").then(r => {
+    if (r.status === 401) return null;
+    return r.json();
+  });
+
+  // ✅ If not logged in → redirect
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  // ✅ Add to cart locally
+  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+  if (!cart.find(x => x.id === id)) {
+    cart.push({ id, qty: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  alert("Added to cart ✅");
+}
+
+
+  function render(list){
+    grid.innerHTML = list.map(cardHTML).join("");
+  }
+
+  function filter(){
+    let text = q.value.toLowerCase();
+    let list = window.CATALOG.filter(i => i.category=="ott");
+    list = list.filter(i => i.name.toLowerCase().includes(text));
+
+    switch(sort.value){
+      case "lh": list.sort((a,b)=>a.price-b.price); break;
+      case "hl": list.sort((a,b)=>b.price-a.price); break;
+      case "az": list.sort((a,b)=>a.name.localeCompare(b.name)); break;
+    }
+    render(list);
+  }
+
+  q.addEventListener("input", filter);
+  sort.addEventListener("change", filter);
+
+  render(window.CATALOG.filter(i=>i.category=="ott"));
+</script>
+
+</body>
+</html>
+

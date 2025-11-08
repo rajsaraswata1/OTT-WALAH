@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard — OTT Wallah</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./style.css">
+
+<style>
+  body {
+    background: linear-gradient(120deg,#0a0a0a,#111,#151515);
+    color:white;
+  }
+  .dash-wrap { max-width:1200px; margin:40px auto; padding:0 16px; }
+
+  .welcome-box {
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    padding:28px;
+    border-radius:18px;
+    backdrop-filter:blur(10px);
+    margin-bottom:40px;
+  }
+  .welcome-title {
+    font-size:32px;
+    font-weight:900;
+    margin-bottom:4px;
+  }
+  .welcome-sub { opacity:.7; }
+
+  /* CATEGORY CARDS (Same as index) */
+  .cat-grid {
+    margin:30px 0 50px;
+    display:grid;
+    gap:24px;
+    grid-template-columns:repeat(3,1fr);
+  }
+  @media(max-width:900px){ .cat-grid { grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:600px){ .cat-grid { grid-template-columns:1fr;} }
+
+  .cat-card {
+    background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.04));
+    border:1px solid rgba(255,255,255,.12);
+    padding:28px;
+    border-radius:18px;
+    transition:.25s;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    color:white;
+    text-decoration:none;
+    box-shadow:0 20px 40px rgba(0,0,0,.35);
+    backdrop-filter:blur(12px);
+  }
+  .cat-card:hover {
+    transform:translateY(-5px) scale(1.02);
+    border-color:rgba(255,255,255,.35);
+    box-shadow:0 28px 55px rgba(0,0,0,.45);
+  }
+  .cat-icon {
+    width:60px; height:60px;
+    border-radius:14px;
+    background:#111;
+    border:1px solid #222;
+    display:grid;
+    place-items:center;
+    font-size:30px;
+  }
+  .cat-title { font-size:24px; font-weight:800; margin-top:12px; }
+  .cat-sub { opacity:.75; }
+  .cat-cta {
+    display:inline-block;
+    margin-top:16px;
+    background:#e11d2e;
+    padding:10px 16px;
+    border-radius:100px;
+    font-weight:700;
+    border:1px solid rgba(255,255,255,.12);
+  }
+
+  .section-title {
+    font-size:26px;
+    font-weight:900;
+    margin:30px 0 10px;
+  }
+
+  .panel {
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    padding:20px;
+    border-radius:14px;
+    margin-bottom:30px;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="brand">
+      <div class="brand-badge">OW</div>
+      <div>
+        <div style="font-size:18px;font-weight:900;">OTT WALLAH</div>
+        <div class="small">Premium streaming • Tools • Learning</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <a class="btn" href="index.html">Home</a>
+      <a class="btn" href="cart.html">Cart</a>
+      <a class="btn" href="/logout">Logout</a>
+    </div>
+  </div>
+</header>
+
+<div class="dash-wrap">
+
+  <!-- WELCOME BOX -->
+  <div class="welcome-box">
+    <div class="welcome-title">Welcome, <span id="userName">User</span></div>
+    <div class="welcome-sub">Here is your premium dashboard overview</div>
+  </div>
+
+  <!-- CATEGORY SECTION -->
+  <h2 class="section-title">Browse Categories</h2>
+
+  <div class="cat-grid">
+
+    <!-- OTT -->
+    <a class="cat-card" href="ott.html">
+      <div class="cat-icon">🎬</div>
+      <div class="cat-title">OTT Platforms</div>
+      <div class="cat-sub">40+ Streaming apps</div>
+      <div class="cat-cta">Explore →</div>
+    </a>
+
+    <!-- Editing -->
+    <a class="cat-card" href="editing.html">
+      <div class="cat-icon">🎨</div>
+      <div class="cat-title">Editing Tools</div>
+      <div class="cat-sub">Canva • PhotoshoP • Premiere</div>
+      <div class="cat-cta">Explore →</div>
+    </a>
+
+    <!-- Courses -->
+    <a class="cat-card" href="courses.html">
+      <div class="cat-icon">📚</div>
+      <div class="cat-title">Online Courses</div>
+      <div class="cat-sub">Udemy • Coursera • LinkedIn</div>
+      <div class="cat-cta">Explore →</div>
+    </a>
+
+  </div>
+
+  <!-- SUBSCRIPTIONS -->
+  <h2 class="section-title">📺 Active Subscriptions</h2>
+  <div class="panel" id="subList">Loading...</div>
+
+  <!-- ORDERS -->
+  <h2 class="section-title">🧾 Order History</h2>
+  <div class="panel" id="orderList">Loading...</div>
+
+  <a href="/logout">
+    <button class="btn-red" style="margin-top:20px;">Logout</button>
+  </a>
+
+</div>
+
+<script>
+  // ✅ Fetch User Data from /user
+  fetch("/user")
+    .then(r=>r.json())
+    .then(data=>{
+      document.getElementById("userName").innerText = data.name;
+
+      // subscriptions
+      if(data.subscriptions && data.subscriptions.length>0){
+        document.getElementById("subList").innerHTML =
+          data.subscriptions.map(s=>`<div>✅ ${s}</div>`).join("");
+      } else {
+        document.getElementById("subList").innerHTML = "No active subscriptions";
+      }
+
+      // order history
+      if(data.orders && data.orders.length>0){
+        document.getElementById("orderList").innerHTML =
+          data.orders.map(o=>`<div>🧾 ${o}</div>`).join("");
+      } else {
+        document.getElementById("orderList").innerHTML = "No orders found";
+      }
+    })
+    .catch(()=>{
+      window.location.href = "login.html";
+    });
+</script>
+
+</body>
+</html>
+
+

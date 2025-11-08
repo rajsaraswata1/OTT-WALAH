@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart — OTT Wallah</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style.css">
+
+  <style>
+    body { background: linear-gradient(120deg,#0a0a0a,#111,#151515); color:#fff; }
+    .wrap { max-width: 1000px; margin: 40px auto; padding: 0 16px; }
+    .title { font-size:32px; font-weight:900; margin-bottom:20px; }
+    .panel { background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); padding:20px; border-radius:16px; backdrop-filter:blur(12px); }
+    .item { display:flex; justify-content:space-between; align-items:center; padding:14px 10px; border-bottom:1px solid #222; }
+    .item:last-child{ border-bottom:0; }
+    .left { display:flex; align-items:center; gap:14px; }
+    .logo { width:52px; height:52px; border-radius:10px; background:#000; object-fit:contain; padding:6px; border:1px solid #333; }
+    .name { font-size:18px; font-weight:800; }
+    .qty-box { display:flex; align-items:center; gap:10px; }
+    button.qbtn { width:30px; height:30px; background:#111; border:1px solid #333; border-radius:6px; color:#fff; font-size:18px; font-weight:900; cursor:pointer; }
+    button.remove { color:#e11d2e; font-size:12px; cursor:pointer; }
+    .summary { margin-top:20px; padding:20px; border-radius:14px; background:#111; border:1px solid #222; }
+    .row { display:flex; justify-content:space-between; margin:8px 0; }
+    .price { font-size:20px; font-weight:900; color:#ffd166; }
+    .btn-red { background:#e11d2e; padding:12px 18px; border-radius:10px; border:1px solid #e11d2e; font-weight:800; color:#fff; cursor:pointer; width:100%; text-align:center; margin-top:12px; }
+    .btn-red:hover { filter:brightness(1.1); }
+    .empty { text-align:center; padding:40px; font-size:20px; opacity:.7; }
+  </style>
+
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <div class="brand">
+      <div class="brand-badge">OW</div>
+      <div>
+        <div style="font-size:18px;font-weight:900;">OTT WALLAH</div>
+        <div class="small">Premium streaming • Tools • Learning</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <a class="btn" href="index.html">Home</a>
+      <a class="btn" href="dashboard.html">Dashboard</a>
+      <a class="btn" href="login.html">Login</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <h1 class="title">Your Cart</h1>
+
+  <div id="cartBox" class="panel"></div>
+
+  <div id="summaryBox"></div>
+</div>
+
+
+<script src="./data.js"></script>
+<script>
+
+  // ✅ READ / WRITE CART
+  function getCart(){ return JSON.parse(localStorage.getItem("cart") || "[]"); }
+  function setCart(c){ localStorage.setItem("cart", JSON.stringify(c)); }
+
+  // ✅ LOGIN CHECK
+  function isLoggedIn(){
+    return localStorage.getItem("loggedIn") === "true";
+  }
+
+  // ✅
+
+
