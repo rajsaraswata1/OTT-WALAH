@@ -18,7 +18,7 @@ require("./passportConfig");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Serve frontend
+// Serve static files
 app.use(express.static(__dirname));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -34,7 +34,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// ✅ MongoDB Atlas Connection
+// MongoDB Atlas Connection
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -43,29 +43,29 @@ mongoose
   .then(() => console.log("✅ MongoDB Atlas Connected"))
   .catch((err) => console.error("❌ Mongo Error:", err));
 
-// ✅ AUTH ROUTES
+// AUTH ROUTES
 app.use("/", authRoutes);
 
-// ✅ DASHBOARD PROTECTED ROUTE
+// Protected Dashboard Route
 app.get("/dashboard", (req, res) => {
-    if (!req.user) return res.redirect("/login.html");
-    res.sendFile(path.join(__dirname, "dashboard.html"));
+  if (!req.user) return res.redirect("/login.html");
+  res.sendFile(path.join(__dirname, "dashboard.html"));
 });
 
-// ✅ API to get logged-in user
+// Logged-in User API
 app.get("/user", (req, res) => {
-    if (!req.user)
-      return res.status(401).json({ error: "Not Logged In" });
+  if (!req.user)
+    return res.status(401).json({ error: "Not Logged In" });
 
-    res.json({
-      name: req.user.username || req.user.name || "User",
-      email: req.user.email,
-      subscriptions: req.user.subscriptions || [],
-      orders: req.user.orders || []
-    });
+  res.json({
+    name: req.user.username || req.user.name || "User",
+    email: req.user.email,
+    subscriptions: req.user.subscriptions || [],
+    orders: req.user.orders || [],
+  });
 });
 
-// ✅ LOGOUT
+// Logout
 app.get("/logout", (req, res) => {
   req.logout(() => {
     req.session.destroy(() => {
@@ -74,13 +74,12 @@ app.get("/logout", (req, res) => {
   });
 });
 
-// ✅ HOME
+// Home Page
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// ✅ START SERVER
+// Start Server
 app.listen(port, () =>
   console.log(`✅ Server running at http://localhost:${port}`)
 );
-
