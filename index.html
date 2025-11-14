@@ -1,80 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OTT WALLAH — Premium OTT, Courses & Editing Tools</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OTT WALLAH — Apps, Courses & Tools</title>
 
-  <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-  <!-- ===== NAVBAR ===== -->
-  <header class="header glass">
+  <!-- NAV -->
+  <header class="header">
     <div class="container nav">
-      <a class="logo" href="#">
-        <i class="ri-clapperboard-fill"></i> OTT <span>WALLAH</span>
-      </a>
+      <a class="logo" href="/"><i class="ri-clapperboard-fill"></i> OTT <span>WALLAH</span></a>
 
       <nav class="nav-links" id="navLinks">
         <a href="#apps">OTT Apps</a>
         <a href="#courses">Courses</a>
-        <a href="#tools">Editing Tools</a>
+        <a href="#tools">Tools</a>
         <a href="#faq">FAQ</a>
-        <button class="btn btn-outline" id="loginBtn">
-          <i class="ri-user-3-line"></i> Login
-        </button>
       </nav>
 
-      <button class="hamb" id="hamb"><i class="ri-menu-3-fill"></i></button>
+      <div class="nav-actions">
+        <button class="btn btn-outline" id="loginBtn"> <i class="ri-user-3-line"></i> Login </button>
+        <button class="hamb" id="hamb"><i class="ri-menu-3-line"></i></button>
+      </div>
     </div>
   </header>
 
-  <!-- ===== HERO SECTION ===== -->
+  <!-- HERO -->
   <section class="hero">
-    <div class="slider">
-      <div class="slides">
-        <img src="/uploads/banner1.png">
-        <img src="/uploads/banner2.png">
-        <img src="/uploads/banner3.png">
-      </div>
-    </div>
+    <div class="container hero-inner">
+      <div class="hero-left">
+        <h1>Premium <span>OTT Apps</span>, <span>Courses</span> & <span>Editing Tools</span></h1>
+        <p class="sub">Best price • Instant delivery • Lifetime access available</p>
 
-    <div class="container hero__content">
-      <h1>Premium <span>OTT Apps</span>, <span>Courses</span> & <span>Editing Tools</span></h1>
-      <p>India’s most affordable digital marketplace with instant delivery.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#apps"><i class="ri-flashlight-fill"></i> Explore Now</a>
+          <button class="btn btn-dark" id="openLogin"><i class="ri-google-fill"></i> Login with Google</button>
+        </div>
 
-      <div class="hero__cta">
-        <a href="#apps" class="btn btn-primary">
-          <i class="ri-fire-fill"></i> Explore Now
-        </a>
-        <button class="btn btn-dark" id="openLogin">
-          <i class="ri-google-fill"></i> Login with Google
-        </button>
+        <div class="hero-stats">
+          <div><strong>8,500+</strong><span>Active Users</span></div>
+          <div><strong>4.9★</strong><span>Avg Rating</span></div>
+          <div><strong>Instant</strong><span>Delivery</span></div>
+        </div>
       </div>
 
-      <div class="hero__stats">
-        <div><strong>8,500+</strong><span>Active Users</span></div>
-        <div><strong>4.9★</strong><span>Customer Rating</span></div>
-        <div><strong>Instant</strong><span>Delivery</span></div>
+      <div class="hero-right">
+        <div class="hero-banners">
+          <img src="/uploads/banner1.png" alt="banner1" class="banner show">
+          <img src="/uploads/banner2.png" alt="banner2" class="banner">
+          <img src="/uploads/banner3.png" alt="banner3" class="banner">
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== OTT APPS ===== -->
+  <!-- ROW: apps -->
   <section class="section" id="apps">
-    <div class="container section__head">
+    <div class="container section-head">
       <h2><i class="ri-tv-2-fill"></i> OTT Apps</h2>
-      <div class="row__controls">
+      <div class="controls">
         <button class="row-btn prev" data-target="row-apps"><i class="ri-arrow-left-s-line"></i></button>
         <button class="row-btn next" data-target="row-apps"><i class="ri-arrow-right-s-line"></i></button>
       </div>
@@ -82,11 +72,11 @@
     <div class="container row" id="row-apps"></div>
   </section>
 
-  <!-- ===== COURSES ===== -->
+  <!-- ROW: courses -->
   <section class="section" id="courses">
-    <div class="container section__head">
+    <div class="container section-head">
       <h2><i class="ri-graduation-cap-fill"></i> Courses</h2>
-      <div class="row__controls">
+      <div class="controls">
         <button class="row-btn prev" data-target="row-courses"><i class="ri-arrow-left-s-line"></i></button>
         <button class="row-btn next" data-target="row-courses"><i class="ri-arrow-right-s-line"></i></button>
       </div>
@@ -94,11 +84,11 @@
     <div class="container row" id="row-courses"></div>
   </section>
 
-  <!-- ===== EDITING TOOLS ===== -->
+  <!-- ROW: tools -->
   <section class="section" id="tools">
-    <div class="container section__head">
-      <h2><i class="ri-scissors-cut-fill"></i> Editing Tools</h2>
-      <div class="row__controls">
+    <div class="container section-head">
+      <h2><i class="ri-scissors-2-fill"></i> Editing Tools</h2>
+      <div class="controls">
         <button class="row-btn prev" data-target="row-tools"><i class="ri-arrow-left-s-line"></i></button>
         <button class="row-btn next" data-target="row-tools"><i class="ri-arrow-right-s-line"></i></button>
       </div>
@@ -106,78 +96,60 @@
     <div class="container row" id="row-tools"></div>
   </section>
 
-  <!-- ===== FAQ ===== -->
+  <!-- FAQ -->
   <section class="section" id="faq">
     <div class="container">
-      <h2><i class="ri-questionnaire-fill"></i> Frequently Asked Questions</h2>
-
+      <h2><i class="ri-questionnaire-fill"></i> FAQ</h2>
       <div class="faq">
-        <details>
-          <summary>Delivery kaise hoti hai?</summary>
-          <p>Payment ke baad turant WhatsApp / Email par access mil jaata hai.</p>
-        </details>
-        <details>
-          <summary>Refund policy?</summary>
-          <p>Digital products refundable nahi — lekin support 24x7 available hai.</p>
-        </details>
-        <details>
-          <summary>Login kaise karu?</summary>
-          <p>Top right pe “Login” dabao ya yahan se <a href="/auth/google">Google Login</a> karo.</p>
-        </details>
+        <details><summary>Delivery kaise hoti hai?</summary><p>Payment ke turant baad email / WhatsApp pe access milta hai.</p></details>
+        <details><summary>Refund policy?</summary><p>Digital products usually non-refundable. Contact support for issues.</p></details>
+        <details><summary>Login kaise karu?</summary><p>Top right Login button ya <a href="/auth/google">Google Login</a>.</p></details>
       </div>
     </div>
   </section>
 
-  <!-- ===== FOOTER ===== -->
+  <!-- FOOTER -->
   <footer class="footer">
-    <div class="container footer__grid">
+    <div class="container footer-grid">
       <div>
-        <a class="logo" href="#"><i class="ri-clapperboard-fill"></i> OTT <span>WALLAH</span></a>
-        <p>India’s trusted store for affordable OTT subscriptions & digital tools.</p>
+        <a class="logo" href="/"><i class="ri-clapperboard-fill"></i> OTT <span>WALLAH</span></a>
+        <p>Premium digital marketplace — instant delivery & lifetime plans.</p>
       </div>
       <div>
         <h4>Explore</h4>
         <a href="#apps">OTT Apps</a>
         <a href="#courses">Courses</a>
-        <a href="#tools">Editing Tools</a>
+        <a href="#tools">Tools</a>
       </div>
       <div>
         <h4>Support</h4>
         <a href="mailto:support@ottwallah.com">support@ottwallah.com</a>
-        <a href="https://wa.me/919837777006" target="_blank">WhatsApp Support</a>
+        <a href="https://wa.me/919837777006" target="_blank">WhatsApp</a>
       </div>
     </div>
     <p class="copy">© <span id="yr"></span> OTT WALLAH — All Rights Reserved.</p>
   </footer>
 
-  <!-- ===== LOGIN MODAL ===== -->
+  <!-- LOGIN MODAL -->
   <div class="modal" id="loginModal" aria-hidden="true">
-    <div class="modal__dialog glass">
-      <button class="modal__close" id="closeLogin"><i class="ri-close-line"></i></button>
-      <h3>Welcome Back!</h3>
-      <p>Login to access dashboard, orders, downloads & more.</p>
-
-      <a class="btn btn-google" href="/auth/google">
-        <i class="ri-google-fill"></i> Continue with Google
-      </a>
-
+    <div class="modal-dialog">
+      <button class="modal-close" id="closeLogin"><i class="ri-close-line"></i></button>
+      <h3>Login to OTT WALLAH</h3>
+      <a class="btn btn-google" href="/auth/google"><i class="ri-google-fill"></i> Continue with Google</a>
       <div class="or"><span>or</span></div>
-
-      <form class="mini-form" onsubmit="return false;">
-        <input type="email" placeholder="Enter Email" required />
-        <button class="btn btn-dark">Get Magic Link</button>
+      <form onsubmit="return false" class="mini-form">
+        <input type="email" placeholder="Email address" required />
+        <button class="btn btn-dark" type="submit">Get Magic Link</button>
       </form>
-
-      <p class="muted">By continuing, you agree to Terms & Privacy Policy.</p>
     </div>
   </div>
 
-  <!-- ===== WHATSAPP FLOATING BTN ===== -->
-  <a href="https://wa.me/919837777006?text=Hi%20OTT%20WALLAH%2C%20I%20need%20help"
-     class="wa-float" target="_blank">
+  <!-- WhatsApp float -->
+  <a class="wa-float" href="https://wa.me/919837777006?text=Hi%20OTT%20WALLAH" target="_blank" aria-label="WhatsApp">
     <i class="ri-whatsapp-fill"></i>
   </a>
 
+  <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

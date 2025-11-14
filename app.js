@@ -1,76 +1,83 @@
-// ===== Data (yahan apne real products add kar sakte ho) =====
-const data = {
-  apps: [
-    { title: "Netflix Premium", price: "₹249", tag: "Hot",
-      img: "https://picsum.photos/seed/netflix/600/340", meta: "4 Devices • 1 Month" },
-    { title: "Amazon Prime", price: "₹199", tag: "Deal",
-      img: "https://picsum.photos/seed/prime/600/340", meta: "4K • 1 Month" },
-    { title: "Disney+ Hotstar", price: "₹149",
-      img: "https://picsum.photos/seed/hotstar/600/340", meta: "Full HD • 1 Month" }
-  ],
-  courses: [
-    { title: "Video Editing Masterclass", price: "₹499",
-      img: "https://picsum.photos/seed/edit/600/340", meta: "30+ Lessons • Files" },
-    { title: "YouTube Growth Course", price: "₹399",
-      img: "https://picsum.photos/seed/youtube/600/340", meta: "Fast Growth Strategy" }
-  ],
-  tools: [
-    { title: "CapCut Pro Pack", price: "₹149",
-      img: "https://picsum.photos/seed/capcut/600/340", meta: "Presets + LUTs" },
-    { title: "AE Transition Pack", price: "₹299",
-      img: "https://picsum.photos/seed/ae/600/340", meta: "For After Effects" }
-  ]
-};
+// app.js - renders rows from data.js, modal, banner slider
 
-// ===== Utilities =====
-const q = (s, root=document) => root.querySelector(s);
-const qa = (s, root=document) => [...root.querySelectorAll(s)];
+document.addEventListener('DOMContentLoaded', () => {
+  // year
+  document.getElementById('yr')?.appendChild(document.createTextNode(new Date().getFullYear()));
 
-function cardTemplate(item){
-  return `
-    <article class="card">
-      ${item.tag ? `<span class="badge">${item.tag}</span>` : ""}
-      <div class="card__img">
-        <img src="${item.img}" alt="${item.title}" loading="lazy">
-      </div>
-      <div class="card__body">
-        <h3 class="card__title">${item.title}</h3>
-        <div class="card__meta">${item.meta}</div>
-        <div class="card__actions">
-          <a class="btn btn-dark">₹ ${item.price}</a>
-          <a class="btn btn-primary">Buy Now</a>
+  // render cards
+  function createCard(item){
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `
+      <div class="thumb"><img src="${item.file}" alt="${item.title}"></div>
+      <h3>${item.title}</h3>
+      <div class="meta">
+        <span class="badge">${item.tag || ''}</span>
+        <div>
+          <strong>${item.price || ''}</strong>
         </div>
       </div>
-    </article>
-  `;
-}
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn btn-primary buyBtn" data-id="${item.id}">Buy Now</button>
+        <button class="btn btn-outline detailsBtn" data-id="${item.id}"><i class="ri-information-line"></i></button>
+      </div>
+    `;
+    return div;
+  }
 
-function renderRow(rowId, items){
-  const row = q(`#${rowId}`);
-  row.innerHTML = items.map(cardTemplate).join("");
-}
+  function populateRow(targetId, list){
+    const container = document.getElementById(targetId);
+    if(!container) return;
+    container.innerHTML = '';
+    list.forEach(it => container.appendChild(createCard(it)));
+  }
 
-// ===== Init rows =====
-renderRow("row-apps", data.apps);
-renderRow("row-courses", data.courses);
-renderRow("row-tools", data.tools);
+  // from data.js
+  populateRow('row-apps', PRODUCTS.apps);
+  populateRow('row-courses', PRODUCTS.courses);
+  populateRow('row-tools', PRODUCTS.tools);
 
-// ===== Row controls =====
-qa(".row-btn").forEach(btn=>{
-  const dir = btn.classList.contains("next") ? 1 : -1;
-  const targetId = btn.getAttribute("data-target");
-  const el = q(`#${targetId}`);
-  btn.addEventListener("click", () => el.scrollBy({left: dir * 600, behavior: "smooth"}));
+  // row scroll controls
+  document.querySelectorAll('.row-btn').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const target = btn.dataset.target;
+      const row = document.getElementById(target);
+      if(!row) return;
+      const dir = btn.classList.contains('next') ? 1 : -1;
+      row.scrollBy({left: dir * 300, behavior:'smooth'});
+    });
+  });
+
+  // modal open/close
+  const loginModal = document.getElementById('loginModal');
+  document.getElementById('openLogin')?.addEventListener('click', ()=> loginModal.classList.add('show'));
+  document.getElementById('loginBtn')?.addEventListener('click', ()=> loginModal.classList.add('show'));
+  document.getElementById('closeLogin')?.addEventListener('click', ()=> loginModal.classList.remove('show'));
+  window.addEventListener('click', (e)=> { if(e.target === loginModal) loginModal.classList.remove('show') });
+
+  // buy click
+  document.body.addEventListener('click', e=>{
+    if(e.target.closest('.buyBtn')){
+      const id = e.target.closest('.buyBtn').dataset.id;
+      alert('Buy clicked for ' + id + '. You will add payment flow here.');
+    }
+  });
+
+  // banner slider (simple)
+  const banners = Array.from(document.querySelectorAll('.hero .banner'));
+  let bi = 0;
+  setInterval(()=> {
+    if(banners.length<=1) return;
+    banners[bi].classList.remove('show');
+    bi = (bi+1) % banners.length;
+    banners[bi].classList.add('show');
+  }, 3500);
+
+  // hamburger toggle
+  const hamb = document.getElementById('hamb');
+  const navLinks = document.getElementById('navLinks');
+  hamb?.addEventListener('click', ()=> {
+    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+  });
+
 });
-
-// ===== Login Popup =====
-const modal = q("#loginModal");
-q("#loginBtn").onclick = q("#openLogin").onclick = () => modal.classList.add("show");
-q("#closeLogin").onclick = () => modal.classList.remove("show");
-modal.addEventListener("click", (e)=>{ if(e.target===modal) modal.classList.remove("show") });
-
-// ===== Mobile nav =====
-q("#hamb").onclick = ()=> q("#navLinks").classList.toggle("show");
-
-// Year in footer
-q("#yr").textContent = new Date().getFullYear();
