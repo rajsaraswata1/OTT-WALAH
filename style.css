@@ -1,6 +1,6 @@
-/* -----------------------------------
+/* ============================================================
    GLOBAL THEME
------------------------------------ */
+============================================================ */
 * {
   margin: 0;
   padding: 0;
@@ -41,22 +41,29 @@ img {
   font-size: 2.4rem;
   font-weight: 700;
   color: #00c8ff;
+  text-shadow: 0 0 20px #00eaffac;
 }
 
 
 
-/* -----------------------------------
+/* ============================================================
    NAVBAR
------------------------------------ */
+============================================================ */
 .header {
   width: 100%;
   padding: 18px 0;
   position: fixed;
   top: 0;
   z-index: 999;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(13px);
   background: rgba(0, 0, 0, 0.45);
   border-bottom: 1px solid rgba(0, 200, 255, 0.2);
+  animation: fadeDown 0.6s ease forwards;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .logo {
@@ -67,6 +74,7 @@ img {
 
 .logo span {
   color: #00c8ff;
+  text-shadow: 0 0 10px #00c8ff;
 }
 
 .nav {
@@ -85,6 +93,12 @@ img {
   color: white;
   font-size: 1rem;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #00c8ff;
+  text-shadow: 0 0 10px #00c8ff;
 }
 
 .btn-login {
@@ -100,6 +114,7 @@ img {
 .btn-login:hover {
   background: #00c8ff;
   color: #000;
+  box-shadow: 0 0 15px #00c8ff;
 }
 
 .hamb {
@@ -111,9 +126,9 @@ img {
 
 
 
-/* -----------------------------------
-   HERO SECTION
------------------------------------ */
+/* ============================================================
+   HERO SECTION — FULL PREMIUM SLIDER
+============================================================ */
 .hero {
   width: 100%;
   height: 100vh;
@@ -121,7 +136,7 @@ img {
   position: relative;
 }
 
-/* Slider */
+/* SLIDER */
 .slider {
   width: 100%;
   height: 100%;
@@ -134,48 +149,57 @@ img {
   display: flex;
   width: 300%;
   height: 100%;
-  animation: slide 15s infinite linear;
+  animation: slide 18s infinite ease-in-out;
 }
 
 .slides img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.5);
+  filter: brightness(0.45);
+  transition: 0.4s ease-in-out;
 }
 
 @keyframes slide {
-  0% { transform: translateX(0%); }
-  33% { transform: translateX(-100%); }
-  66% { transform: translateX(-200%); }
+  0%   { transform: translateX(0%); }
+  33%  { transform: translateX(-100%); }
+  66%  { transform: translateX(-200%); }
   100% { transform: translateX(0%); }
 }
 
-/* HERO content */
+/* HERO CONTENT */
 .hero-content {
   position: relative;
   z-index: 10;
   margin-top: 10vh;
   text-align: center;
+  animation: fadeUp 1s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .headline {
-  font-size: 3.5rem;
+  font-size: 3.8rem;
   font-weight: 800;
+  text-shadow: 0 0 25px #000;
 }
 
 .headline span {
   color: #00c8ff;
+  text-shadow: 0 0 15px #00eaff;
 }
 
 .subtext {
   margin: 15px 0;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   opacity: 0.9;
 }
 
 .hero-buttons {
-  margin-top: 20px;
+  margin-top: 25px;
   display: flex;
   justify-content: center;
   gap: 15px;
@@ -193,13 +217,16 @@ img {
   transition: 0.3s ease;
 }
 
+/* CTA buttons */
 .btn-primary {
   background: #00c8ff;
   color: black;
+  box-shadow: 0 0 15px #00eaff8f;
 }
 
 .btn-primary:hover {
-  background: #009ac5;
+  background: #00a4d3;
+  transform: scale(1.03);
 }
 
 .btn-dark {
@@ -228,9 +255,9 @@ img {
 
 
 
-/* -----------------------------------
-   TRENDING ROW
------------------------------------ */
+/* ============================================================
+   TRENDING ROWS
+============================================================ */
 .scroll-row {
   display: flex;
   overflow-x: auto;
@@ -241,7 +268,6 @@ img {
 .scroll-row::-webkit-scrollbar {
   height: 8px;
 }
-
 .scroll-row::-webkit-scrollbar-thumb {
   background: #00c8ff;
   border-radius: 20px;
@@ -262,6 +288,7 @@ img {
 .card:hover {
   transform: translateY(-7px);
   border-color: #00c8ff;
+  box-shadow: 0 0 20px #00eaff3f;
 }
 
 .card p {
@@ -271,9 +298,9 @@ img {
 
 
 
-/* -----------------------------------
+/* ============================================================
    COLLECTION CARDS
------------------------------------ */
+============================================================ */
 .neon-box {
   background: rgba(0, 200, 255, 0.05);
   border-top: 1px solid #00c8ff35;
@@ -297,13 +324,14 @@ img {
 
 .collection-card:hover {
   transform: scale(1.04);
+  box-shadow: 0 0 20px #00c8ff69;
 }
 
 
 
-/* -----------------------------------
+/* ============================================================
    GRID CARDS
------------------------------------ */
+============================================================ */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -322,6 +350,7 @@ img {
 .card2:hover {
   border-color: #00c8ff;
   transform: translateY(-5px);
+  box-shadow: 0 0 15px #00dbff3d;
 }
 
 .card2 h4 {
@@ -330,9 +359,10 @@ img {
 }
 
 
-/* -----------------------------------
+
+/* ============================================================
    REVIEWS
------------------------------------ */
+============================================================ */
 .reviews {
   display: flex;
   gap: 20px;
@@ -349,9 +379,9 @@ img {
 
 
 
-/* -----------------------------------
+/* ============================================================
    WHY US
------------------------------------ */
+============================================================ */
 .why div {
   text-align: center;
   padding: 20px;
@@ -368,9 +398,9 @@ img {
 
 
 
-/* -----------------------------------
+/* ============================================================
    FOOTER
------------------------------------ */
+============================================================ */
 .footer {
   margin-top: 80px;
   padding: 60px 20px;
@@ -395,9 +425,9 @@ img {
 
 
 
-/* -----------------------------------
+/* ============================================================
    LOGIN MODAL
------------------------------------ */
+============================================================ */
 .modal {
   position: fixed;
   inset: 0;
@@ -410,6 +440,7 @@ img {
 
 .modal.show {
   display: grid;
+  animation: fadeUp 0.25s ease-out;
 }
 
 .modal-box {
@@ -419,6 +450,7 @@ img {
   border-radius: 12px;
   text-align: center;
   border: 1px solid #00c8ff35;
+  position: relative;
 }
 
 .btn-google {
@@ -428,6 +460,11 @@ img {
   border-radius: 8px;
   display: block;
   margin-top: 18px;
+  box-shadow: 0 0 15px #00eaff7f;
+}
+
+.btn-google:hover {
+  background: #00a4d3;
 }
 
 .close-btn {
@@ -443,9 +480,9 @@ img {
 
 
 
-/* -----------------------------------
+/* ============================================================
    WHATSAPP BUTTON
------------------------------------ */
+============================================================ */
 .wa-float {
   position: fixed;
   bottom: 25px;
@@ -457,4 +494,9 @@ img {
   font-size: 2rem;
   z-index: 99999;
   box-shadow: 0 0 20px rgba(0, 255, 150, 0.4);
+  transition: 0.3s;
+}
+
+.wa-float:hover {
+  transform: scale(1.1);
 }

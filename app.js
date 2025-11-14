@@ -10,12 +10,10 @@ const hamb = document.getElementById("hamb");
 const yearSpan = document.getElementById("yr");
 
 
-
 /* =======================================
    1️⃣ AUTO UPDATE YEAR
 ======================================= */
 yearSpan.textContent = new Date().getFullYear();
-
 
 
 /* =======================================
@@ -29,34 +27,46 @@ function closeLoginModal() {
   loginModal.classList.remove("show");
 }
 
-loginBtn.addEventListener("click", openLoginModal);
-if (openLogin) openLogin.addEventListener("click", openLoginModal);
-closeLogin.addEventListener("click", closeLoginModal);
+// Navbar login button
+if (loginBtn) loginBtn.addEventListener("click", () => {
+  openLoginModal();
+});
 
-// Anywhere click = open login (only homepage)
-document.addEventListener("click", (e) => {
-  const ignoreIDs = ["loginModal", "loginBtn", "openLogin", "closeLogin"];
-  if (!ignoreIDs.includes(e.target.id)) {
-    // Optional: only if not inside modal
-    if (!loginModal.contains(e.target)) {
-      openLoginModal();
-    }
-  }
-}, { once: true });
+// Hero login button
+if (openLogin) openLogin.addEventListener("click", () => {
+  openLoginModal();
+});
 
+// Close login modal
+if (closeLogin) closeLogin.addEventListener("click", () => {
+  closeLoginModal();
+});
 
 
 /* =======================================
-   3️⃣ MOBILE MENU TOGGLE
+   3️⃣ OPEN LOGIN WHEN USER CLICKS ANYWHERE
+   (except inside modal)
+======================================= */
+document.addEventListener("click", function (e) {
+  const isInsideModal = loginModal.contains(e.target);
+  const isLoginButton = e.target.id === "loginBtn" || e.target.id === "openLogin" || e.target.id === "closeLogin";
+
+  if (!isInsideModal && !isLoginButton) {
+    openLoginModal();
+  }
+}, { once: true });  // Run only once (best UX)
+
+
+/* =======================================
+   4️⃣ MOBILE MENU TOGGLE
 ======================================= */
 hamb.addEventListener("click", () => {
   navLinks.classList.toggle("show");
 });
 
 
-
 /* =======================================
-   4️⃣ HORIZONTAL ROW SLIDERS
+   5️⃣ HORIZONTAL ROW SLIDERS
 ======================================= */
 function setupRowSlider(rowId) {
   const row = document.getElementById(rowId);
@@ -79,9 +89,8 @@ setupRowSlider("row-courses");
 setupRowSlider("row-tools");
 
 
-
 /* =======================================
-   5️⃣ LOAD DATA FROM data.js
+   6️⃣ LOAD PRODUCTS FROM data.js
 ======================================= */
 if (typeof productsData !== "undefined") {
   function loadRow(rowId, category) {
@@ -89,7 +98,7 @@ if (typeof productsData !== "undefined") {
     const items = productsData[category];
 
     container.innerHTML = items.map(item => `
-      <div class="card">
+      <div class="card login-block">
         <img src="/uploads/${item.img}" alt="">
         <p>${item.name}</p>
       </div>
@@ -102,9 +111,8 @@ if (typeof productsData !== "undefined") {
 }
 
 
-
 /* =======================================
-   6️⃣ AUTO-SLIDER: HERO BANNER (SMOOTH)
+   7️⃣ HERO AUTO-SLIDER
 ======================================= */
 const slider = document.querySelector(".slides");
 let currentSlide = 0;
@@ -118,9 +126,8 @@ function autoSlide() {
 setInterval(autoSlide, 4500);
 
 
-
 /* =======================================
-   7️⃣ LOGIN MUST BEFORE ACCESS
+   8️⃣ LOGIN REQUIRED FOR ANY INTERACTION
 ======================================= */
 document.querySelectorAll("a, .card, .collection-card").forEach(el => {
   el.addEventListener("click", (e) => {
@@ -128,3 +135,4 @@ document.querySelectorAll("a, .card, .collection-card").forEach(el => {
     openLoginModal();
   });
 });
+
