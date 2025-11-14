@@ -1,201 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Dashboard — OTT Wallah</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard • OTT WALLAH</title>
 
-<style>
-  body {
-    background: linear-gradient(120deg,#0a0a0a,#111,#151515);
-    color:white;
-  }
-  .dash-wrap { max-width:1200px; margin:40px auto; padding:0 16px; }
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
 
-  .welcome-box {
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.12);
-    padding:28px;
-    border-radius:18px;
-    backdrop-filter:blur(10px);
-    margin-bottom:40px;
-  }
-  .welcome-title {
-    font-size:32px;
-    font-weight:900;
-    margin-bottom:4px;
-  }
-  .welcome-sub { opacity:.7; }
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
 
-  /* CATEGORY CARDS (Same as index) */
-  .cat-grid {
-    margin:30px 0 50px;
-    display:grid;
-    gap:24px;
-    grid-template-columns:repeat(3,1fr);
-  }
-  @media(max-width:900px){ .cat-grid { grid-template-columns:repeat(2,1fr);} }
-  @media(max-width:600px){ .cat-grid { grid-template-columns:1fr;} }
+  <style>
+    .user-box {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+    }
 
-  .cat-card {
-    background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.04));
-    border:1px solid rgba(255,255,255,.12);
-    padding:28px;
-    border-radius:18px;
-    transition:.25s;
-    cursor:pointer;
-    position:relative;
-    overflow:hidden;
-    color:white;
-    text-decoration:none;
-    box-shadow:0 20px 40px rgba(0,0,0,.35);
-    backdrop-filter:blur(12px);
-  }
-  .cat-card:hover {
-    transform:translateY(-5px) scale(1.02);
-    border-color:rgba(255,255,255,.35);
-    box-shadow:0 28px 55px rgba(0,0,0,.45);
-  }
-  .cat-icon {
-    width:60px; height:60px;
-    border-radius:14px;
-    background:#111;
-    border:1px solid #222;
-    display:grid;
-    place-items:center;
-    font-size:30px;
-  }
-  .cat-title { font-size:24px; font-weight:800; margin-top:12px; }
-  .cat-sub { opacity:.75; }
-  .cat-cta {
-    display:inline-block;
-    margin-top:16px;
-    background:#e11d2e;
-    padding:10px 16px;
-    border-radius:100px;
-    font-weight:700;
-    border:1px solid rgba(255,255,255,.12);
-  }
+    .user-box img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border:2px solid #0aff9d;
+    }
 
-  .section-title {
-    font-size:26px;
-    font-weight:900;
-    margin:30px 0 10px;
-  }
+    .logout-btn {
+      background: #ff4d4d;
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: #fff;
+      margin-left: 10px;
+      cursor:pointer;
+      border:none;
+    }
 
-  .panel {
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.12);
-    padding:20px;
-    border-radius:14px;
-    margin-bottom:30px;
-  }
-</style>
+    .logout-btn:hover { background:#ff3333; }
+  </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="container header-inner">
-    <div class="brand">
-      <div class="brand-badge">OW</div>
-      <div>
-        <div style="font-size:18px;font-weight:900;">OTT WALLAH</div>
-        <div class="small">Premium streaming • Tools • Learning</div>
+  <!-- ===== NAVBAR ===== -->
+  <header class="header glass">
+    <div class="container nav">
+      <a class="logo" href="#">
+        <i class="ri-clapperboard-fill"></i> OTT <span>WALLAH</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#apps">OTT Apps</a>
+        <a href="#courses">Courses</a>
+        <a href="#tools">Editing Tools</a>
+        <a href="#faq">FAQ</a>
+
+        <!-- User Info (Login removed) -->
+        <div class="user-box" id="userBox" style="display:none;">
+          <img id="userImg" src="">
+          <div>
+            <div id="userName"></div>
+            <small id="userEmail" style="opacity:.7;"></small>
+          </div>
+          <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+      </nav>
+
+      <button class="hamb" id="hamb"><i class="ri-menu-3-fill"></i></button>
+    </div>
+  </header>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero">
+    <div class="slider">
+      <div class="slides">
+        <img src="/uploads/banner1.png">
+        <img src="/uploads/banner2.png">
+        <img src="/uploads/banner3.png">
       </div>
     </div>
-    <div class="header-actions">
-      <a class="btn" href="index.html">Home</a>
-      <a class="btn" href="cart.html">Cart</a>
-      <a class="btn" href="/logout">Logout</a>
+
+    <div class="container hero__content">
+      <h1>Welcome to Your <span>Dashboard</span></h1>
+      <p>Access all OTT apps, courses & premium tools from one place.</p>
+
+      <div class="hero__cta">
+        <a href="#apps" class="btn btn-primary">
+          <i class="ri-fire-fill"></i> Start Exploring
+        </a>
+      </div>
+
+      <div class="hero__stats">
+        <div><strong>Premium</strong><span>Access</span></div>
+        <div><strong>Your</strong><span>Purchases</span></div>
+        <div><strong>Fast</strong><span>Delivery</span></div>
+      </div>
     </div>
-  </div>
-</header>
+  </section>
 
-<div class="dash-wrap">
+  <!-- ===== OTT APPS SECTION ===== -->
+  <section class="section" id="apps">
+    <div class="container section__head">
+      <h2><i class="ri-tv-2-fill"></i> OTT Apps</h2>
+      <div class="row__controls">
+        <button class="row-btn prev" data-target="row-apps"><i class="ri-arrow-left-s-line"></i></button>
+        <button class="row-btn next" data-target="row-apps"><i class="ri-arrow-right-s-line"></i></button>
+      </div>
+    </div>
+    <div class="container row" id="row-apps"></div>
+  </section>
 
-  <!-- WELCOME BOX -->
-  <div class="welcome-box">
-    <div class="welcome-title">Welcome, <span id="userName">User</span></div>
-    <div class="welcome-sub">Here is your premium dashboard overview</div>
-  </div>
+  <!-- ===== COURSES ===== -->
+  <section class="section" id="courses">
+    <div class="container section__head">
+      <h2><i class="ri-graduation-cap-fill"></i> Courses</h2>
+      <div class="row__controls">
+        <button class="row-btn prev" data-target="row-courses"><i class="ri-arrow-left-s-line"></i></button>
+        <button class="row-btn next" data-target="row-courses"><i class="ri-arrow-right-s-line"></i></button>
+      </div>
+    </div>
+    <div class="container row" id="row-courses"></div>
+  </section>
 
-  <!-- CATEGORY SECTION -->
-  <h2 class="section-title">Browse Categories</h2>
+  <!-- ===== EDITING TOOLS ===== -->
+  <section class="section" id="tools">
+    <div class="container section__head">
+      <h2><i class="ri-scissors-cut-fill"></i> Editing Tools</h2>
+      <div class="row__controls">
+        <button class="row-btn prev" data-target="row-tools"><i class="ri-arrow-left-s-line"></i></button>
+        <button class="row-btn next" data-target="row-tools"><i class="ri-arrow-right-s-line"></i></button>
+      </div>
+    </div>
+    <div class="container row" id="row-tools"></div>
+  </section>
 
-  <div class="cat-grid">
+  <!-- ===== FAQ ===== -->
+  <section class="section" id="faq">
+    <div class="container">
+      <h2><i class="ri-questionnaire-fill"></i> Frequently Asked Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Delivery kaise hoti hai?</summary>
+          <p>Jab aap purchase karte ho, access instantly WhatsApp/Email par mil jata hai.</p>
+        </details>
+        <details>
+          <summary>Mera dashboard kis liye?</summary>
+          <p>Aapke purchases, downloads, orders yahi milenge.</p>
+        </details>
+      </div>
+    </div>
+  </section>
 
-    <!-- OTT -->
-    <a class="cat-card" href="ott.html">
-      <div class="cat-icon">🎬</div>
-      <div class="cat-title">OTT Platforms</div>
-      <div class="cat-sub">40+ Streaming apps</div>
-      <div class="cat-cta">Explore →</div>
-    </a>
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <a class="logo" href="#"><i class="ri-clapperboard-fill"></i> OTT <span>WALLAH</span></a>
+        <p>Premium OTT + Courses + Tools — all at one place.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="#apps">OTT Apps</a>
+        <a href="#courses">Courses</a>
+        <a href="#tools">Editing Tools</a>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <a href="mailto:support@ottwallah.com">support@ottwallah.com</a>
+        <a href="https://wa.me/919837777006" target="_blank">WhatsApp Support</a>
+      </div>
+    </div>
+    <p class="copy">© <span id="yr"></span> OTT WALLAH — All Rights Reserved.</p>
+  </footer>
 
-    <!-- Editing -->
-    <a class="cat-card" href="editing.html">
-      <div class="cat-icon">🎨</div>
-      <div class="cat-title">Editing Tools</div>
-      <div class="cat-sub">Canva • PhotoshoP • Premiere</div>
-      <div class="cat-cta">Explore →</div>
-    </a>
+  <script src="app.js"></script>
 
-    <!-- Courses -->
-    <a class="cat-card" href="courses.html">
-      <div class="cat-icon">📚</div>
-      <div class="cat-title">Online Courses</div>
-      <div class="cat-sub">Udemy • Coursera • LinkedIn</div>
-      <div class="cat-cta">Explore →</div>
-    </a>
+  <script>
+    // Load Logged-in User
+    async function loadUser() {
+      let res = await fetch("/user");
+      if(res.status !== 200){
+        window.location.href = "/login.html";
+        return;
+      }
 
-  </div>
-
-  <!-- SUBSCRIPTIONS -->
-  <h2 class="section-title">📺 Active Subscriptions</h2>
-  <div class="panel" id="subList">Loading...</div>
-
-  <!-- ORDERS -->
-  <h2 class="section-title">🧾 Order History</h2>
-  <div class="panel" id="orderList">Loading...</div>
-
-  <a href="/logout">
-    <button class="btn-red" style="margin-top:20px;">Logout</button>
-  </a>
-
-</div>
-
-<script>
-  // ✅ Fetch User Data from /user
-  fetch("/user")
-    .then(r=>r.json())
-    .then(data=>{
+      let data = await res.json();
       document.getElementById("userName").innerText = data.name;
+      document.getElementById("userEmail").innerText = data.email;
 
-      // subscriptions
-      if(data.subscriptions && data.subscriptions.length>0){
-        document.getElementById("subList").innerHTML =
-          data.subscriptions.map(s=>`<div>✅ ${s}</div>`).join("");
-      } else {
-        document.getElementById("subList").innerHTML = "No active subscriptions";
-      }
+      document.getElementById("userImg").src =
+        data.picture || "https://i.ibb.co/z8Vx0MN/user.png";
 
-      // order history
-      if(data.orders && data.orders.length>0){
-        document.getElementById("orderList").innerHTML =
-          data.orders.map(o=>`<div>🧾 ${o}</div>`).join("");
-      } else {
-        document.getElementById("orderList").innerHTML = "No orders found";
-      }
-    })
-    .catch(()=>{
-      window.location.href = "login.html";
-    });
-</script>
+      document.getElementById("userBox").style.display = "flex";
+    }
+
+    loadUser();
+
+    function logout(){
+      window.location = "/logout";
+    }
+  </script>
 
 </body>
 </html>
-
-

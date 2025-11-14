@@ -1,83 +1,130 @@
-// app.js - renders rows from data.js, modal, banner slider
+/* =======================================
+   GLOBAL VARIABLES
+======================================= */
+const loginModal = document.getElementById("loginModal");
+const loginBtn = document.getElementById("loginBtn");
+const openLogin = document.getElementById("openLogin");
+const closeLogin = document.getElementById("closeLogin");
+const navLinks = document.getElementById("navLinks");
+const hamb = document.getElementById("hamb");
+const yearSpan = document.getElementById("yr");
 
-document.addEventListener('DOMContentLoaded', () => {
-  // year
-  document.getElementById('yr')?.appendChild(document.createTextNode(new Date().getFullYear()));
 
-  // render cards
-  function createCard(item){
-    const div = document.createElement('div');
-    div.className = 'card';
-    div.innerHTML = `
-      <div class="thumb"><img src="${item.file}" alt="${item.title}"></div>
-      <h3>${item.title}</h3>
-      <div class="meta">
-        <span class="badge">${item.tag || ''}</span>
-        <div>
-          <strong>${item.price || ''}</strong>
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button class="btn btn-primary buyBtn" data-id="${item.id}">Buy Now</button>
-        <button class="btn btn-outline detailsBtn" data-id="${item.id}"><i class="ri-information-line"></i></button>
-      </div>
-    `;
-    return div;
-  }
 
-  function populateRow(targetId, list){
-    const container = document.getElementById(targetId);
-    if(!container) return;
-    container.innerHTML = '';
-    list.forEach(it => container.appendChild(createCard(it)));
-  }
+/* =======================================
+   1️⃣ AUTO UPDATE YEAR
+======================================= */
+yearSpan.textContent = new Date().getFullYear();
 
-  // from data.js
-  populateRow('row-apps', PRODUCTS.apps);
-  populateRow('row-courses', PRODUCTS.courses);
-  populateRow('row-tools', PRODUCTS.tools);
 
-  // row scroll controls
-  document.querySelectorAll('.row-btn').forEach(btn=>{
-    btn.addEventListener('click', e=>{
-      const target = btn.dataset.target;
-      const row = document.getElementById(target);
-      if(!row) return;
-      const dir = btn.classList.contains('next') ? 1 : -1;
-      row.scrollBy({left: dir * 300, behavior:'smooth'});
-    });
-  });
 
-  // modal open/close
-  const loginModal = document.getElementById('loginModal');
-  document.getElementById('openLogin')?.addEventListener('click', ()=> loginModal.classList.add('show'));
-  document.getElementById('loginBtn')?.addEventListener('click', ()=> loginModal.classList.add('show'));
-  document.getElementById('closeLogin')?.addEventListener('click', ()=> loginModal.classList.remove('show'));
-  window.addEventListener('click', (e)=> { if(e.target === loginModal) loginModal.classList.remove('show') });
+/* =======================================
+   2️⃣ LOGIN MODAL OPEN / CLOSE
+======================================= */
+function openLoginModal() {
+  loginModal.classList.add("show");
+}
 
-  // buy click
-  document.body.addEventListener('click', e=>{
-    if(e.target.closest('.buyBtn')){
-      const id = e.target.closest('.buyBtn').dataset.id;
-      alert('Buy clicked for ' + id + '. You will add payment flow here.');
+function closeLoginModal() {
+  loginModal.classList.remove("show");
+}
+
+loginBtn.addEventListener("click", openLoginModal);
+if (openLogin) openLogin.addEventListener("click", openLoginModal);
+closeLogin.addEventListener("click", closeLoginModal);
+
+// Anywhere click = open login (only homepage)
+document.addEventListener("click", (e) => {
+  const ignoreIDs = ["loginModal", "loginBtn", "openLogin", "closeLogin"];
+  if (!ignoreIDs.includes(e.target.id)) {
+    // Optional: only if not inside modal
+    if (!loginModal.contains(e.target)) {
+      openLoginModal();
     }
+  }
+}, { once: true });
+
+
+
+/* =======================================
+   3️⃣ MOBILE MENU TOGGLE
+======================================= */
+hamb.addEventListener("click", () => {
+  navLinks.classList.toggle("show");
+});
+
+
+
+/* =======================================
+   4️⃣ HORIZONTAL ROW SLIDERS
+======================================= */
+function setupRowSlider(rowId) {
+  const row = document.getElementById(rowId);
+  const next = document.querySelector(`.next[data-target="${rowId}"]`);
+  const prev = document.querySelector(`.prev[data-target="${rowId}"]`);
+
+  if (!row) return;
+
+  next.addEventListener("click", () => {
+    row.scrollBy({ left: 300, behavior: "smooth" });
   });
 
-  // banner slider (simple)
-  const banners = Array.from(document.querySelectorAll('.hero .banner'));
-  let bi = 0;
-  setInterval(()=> {
-    if(banners.length<=1) return;
-    banners[bi].classList.remove('show');
-    bi = (bi+1) % banners.length;
-    banners[bi].classList.add('show');
-  }, 3500);
-
-  // hamburger toggle
-  const hamb = document.getElementById('hamb');
-  const navLinks = document.getElementById('navLinks');
-  hamb?.addEventListener('click', ()=> {
-    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+  prev.addEventListener("click", () => {
+    row.scrollBy({ left: -300, behavior: "smooth" });
   });
+}
 
+setupRowSlider("row-apps");
+setupRowSlider("row-courses");
+setupRowSlider("row-tools");
+
+
+
+/* =======================================
+   5️⃣ LOAD DATA FROM data.js
+======================================= */
+if (typeof productsData !== "undefined") {
+  function loadRow(rowId, category) {
+    const container = document.getElementById(rowId);
+    const items = productsData[category];
+
+    container.innerHTML = items.map(item => `
+      <div class="card">
+        <img src="/uploads/${item.img}" alt="">
+        <p>${item.name}</p>
+      </div>
+    `).join("");
+  }
+
+  loadRow("row-apps", "apps");
+  loadRow("row-courses", "courses");
+  loadRow("row-tools", "tools");
+}
+
+
+
+/* =======================================
+   6️⃣ AUTO-SLIDER: HERO BANNER (SMOOTH)
+======================================= */
+const slider = document.querySelector(".slides");
+let currentSlide = 0;
+
+function autoSlide() {
+  currentSlide++;
+  if (currentSlide > 2) currentSlide = 0;
+  slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+}
+
+setInterval(autoSlide, 4500);
+
+
+
+/* =======================================
+   7️⃣ LOGIN MUST BEFORE ACCESS
+======================================= */
+document.querySelectorAll("a, .card, .collection-card").forEach(el => {
+  el.addEventListener("click", (e) => {
+    e.preventDefault();
+    openLoginModal();
+  });
 });

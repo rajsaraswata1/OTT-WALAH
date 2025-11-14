@@ -1,183 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Login • OTT Wallah</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login • OTT WALLAH</title>
 
-<style>
-  body {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    background: linear-gradient(135deg, #0a0a0a 40%, #111 60%);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-  }
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-  .container {
-    width: 100%;
-    max-width: 380px;
-    padding: 25px;
-  }
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
 
-  .card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.15);
-    backdrop-filter: blur(20px);
-    border-radius: 18px;
-    padding: 35px 28px;
-    box-shadow: 0 25px 45px rgba(0,0,0,0.5);
-    animation: fadeIn .4s ease;
-  }
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+    body{
+      background: url('/uploads/banner1.png') no-repeat center/cover;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      backdrop-filter:blur(4px);
+    }
 
-  .brand {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+    .login-box{
+      width: 380px;
+      background: rgba(255,255,255,0.14);
+      padding: 35px;
+      border-radius: 18px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+      text-align:center;
+      animation: fadeIn .8s ease-in-out;
+    }
 
-  .brand-badge {
-    background: #e11d2f;
-    width: 70px;
-    height: 70px;
-    border-radius: 18px;
-    display: grid;
-    place-items: center;
-    font-weight: 900;
-    font-size: 26px;
-    margin: 0 auto 10px;
-  }
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(30px);}
+      to{opacity:1; transform:translateY(0);}
+    }
 
-  h2 {
-    text-align: center;
-    font-weight: 800;
-    margin-bottom: 5px;
-  }
+    .logo{
+      font-size: 32px;
+      color: #fff;
+      font-weight:700;
+      margin-bottom: 20px;
+    }
+    .logo span{ color: #0aff9d; }
 
-  p.small {
-    text-align: center;
-    opacity: .75;
-    font-size: 14px;
-    margin-bottom: 25px;
-  }
+    .google-btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      background:#fff;
+      padding:14px;
+      border-radius:12px;
+      font-size:17px;
+      font-weight:600;
+      color:#333;
+      cursor:pointer;
+      transition:0.3s ease;
+      border:2px solid transparent;
+      text-decoration:none;
+    }
 
-  /* Inputs */
-  input {
-    width: 100%;
-    padding: 12px 14px;
-    margin: 10px 0;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.08);
-    color: white;
-    font-size: 15px;
-    outline: none;
-  }
+    .google-btn:hover{
+      transform:scale(1.03);
+      border-color:#4285F4;
+    }
 
-  input:focus {
-    border-color: #e11d2f;
-  }
+    .google-icon{
+      width:28px;
+      height:28px;
+      border-radius:50%;
+    }
 
-  /* Login button */
-  .btn {
-    width: 100%;
-    padding: 12px;
-    background: #e11d2f;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: .25s;
-  }
+    .or-line{
+      margin:22px 0;
+      color:#eee;
+      font-size:14px;
+    }
 
-  .btn:hover {
-    filter: brightness(1.15);
-    transform: translateY(-2px);
-  }
+    input{
+      width:100%;
+      padding:13px 15px;
+      border:none;
+      outline:none;
+      border-radius:10px;
+      margin-top:10px;
+    }
 
-  /* Google Button */
-  .google-btn {
-    margin-top: 18px;
-    background: white;
-    color: #333;
-    font-weight: 600;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    border-radius: 10px;
-    padding: 12px;
-    cursor: pointer;
-    transition: .25s;
-  }
+    button{
+      margin-top:12px;
+      width:100%;
+      padding:13px;
+      border:none;
+      outline:none;
+      background:#0aff9d;
+      font-size:16px;
+      cursor:pointer;
+      border-radius:10px;
+      font-weight:600;
+    }
+    button:hover{ opacity:.9; }
 
-  .google-btn img {
-    width: 22px;
-    height: 22px;
-  }
+    .back-home{
+      display:block;
+      margin-top:20px;
+      color:#fff;
+      text-decoration:none;
+      font-size:15px;
+    }
 
-  .google-btn:hover {
-    filter: brightness(0.92);
-    transform: translateY(-2px);
-  }
-
-  .register {
-    text-align: center;
-    margin-top: 18px;
-    opacity: .75;
-  }
-
-  .register a {
-    color: #e11d2f;
-    font-weight: 600;
-  }
-
-</style>
+  </style>
 </head>
-
 <body>
 
-<div class="container">
-  <div class="card">
+  <div class="login-box">
 
-    <div class="brand">
-      <div class="brand-badge">OW</div>
-      <h2>Welcome Back</h2>
-      <p class="small">Login to continue your subscriptions</p>
-    </div>
+    <div class="logo"><i class="ri-clapperboard-fill"></i> OTT <span>WALLAH</span></div>
 
-    <!-- NORMAL EMAIL LOGIN (Optional) -->
-    <form action="/login" method="POST">
-      <input type="email" name="email" required placeholder="Email">
-      <input type="password" name="password" required placeholder="Password">
-      <button class="btn">Login</button>
-    </form>
-
-    <!-- GOOGLE LOGIN -->
+    <!-- Google Login -->
     <a href="/auth/google" class="google-btn">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg">
+      <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" class="google-icon">
       Continue with Google
     </a>
 
-    <div class="register">
-      New here? <a href="signup.html">Create Account</a>
-    </div>
+    <div class="or-line">or login manually</div>
+
+    <input type="email" placeholder="Email address">
+    <button>Get Magic Link</button>
+
+    <a href="/" class="back-home"><i class="ri-arrow-left-line"></i> Back to Home</a>
 
   </div>
-</div>
 
 </body>
 </html>
-
