@@ -2,74 +2,100 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const passport = require("passport");
+const cors = require("cors");
 const path = require("path");
 
+// Initialize app
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-// ✅ Passport Config
-require("./passportConfig");
-
-// ✅ Routes
-const authRoutes = require("./routes/authRoutes");
-
-// ✅ Middlewares
-app.use(express.urlencoded({ extended: true }));
+// Middlewares
 app.use(express.json());
+app.use(cors());
 
-// ✅ Static Files
-app.use(express.static(path.join(__dirname, "public")));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-// ✅ Session Setup
+// ====== SESSION SETUP (Production Ready) ======
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "supersecret123",
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      ttl: 14 * 24 * 60 * 60, // 14 days
+    }),
     cookie: {
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      secure: process.env.NODE_ENV === "production", // Render = true
+      maxAge: 14 * 24 * 60 * 60 * 1000,
     },
   })
 );
 
-// ✅ Passport Initialization
+// ====== PASSPORT SETUP ======
 app.use(passport.initialize());
 app.use(passport.session());
 
-// ✅ MongoDB Connection
+// Google OAuth Strategy
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "/auth/google/callback",
+    },
+    (accessToken, refreshToken, profile, done) => {
+      return done(null, profile);
+    }
+  )
+);
+
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((obj, done) => done(null, obj));
+
+// ====== GOOGLE AUTH ROUTES ======
+
+// Step 1 – Redirect user to Google login
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+// Step 2 – Google redirects back here
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/auth/failure",
+  }),
+  (req, res) => {
+    res.send("Google Login Successful!");
+  }
+);
+
+app.get("/auth/failure", (req, res) => {
+  res.send("Google Login Failed");
+});
+
+// ====== MONGODB CONNECTION ======
 mongoose
- connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB Atlas Connected"))
-  .catch((err) => console.error("❌ MongoDB Error:", err));
-
-// ✅ Auth Routes
-app.use("/", authRoutes);
-
-// ✅ Protected Dashboard
-app.get("/dashboard", (req, res) => {
-  if (!req.user) return res.redirect("/login.html");
-  res.sendFile(path.join(__dirname, "public", "dashboard.html"));
-});
-
-// ✅ Logged-in User Data API
-app.get("/user", (req, res) => {
-  if (!req.user) return res.status(401).json({ error: "Not Logged In" });
-
-  res.json({
-    name: req.user.username || req.user.name || "User",
-    email: req.user.email,
-    subscriptions: req.user.subscriptions || [],
-    orders: req.user.orders || [],
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("🔥 MongoDB Connected Successfully"))
+  .catch((err) => {
+    console.log("❌ MongoDB Connection Error:", err);
+    process.exit(1);
   });
-});
 
-// ✅ Home Page
+// ====== BASIC API ROUTE ======
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.send("Server is running successfully!");
 });
 
-// ✅ Start Server
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+// ====== START SERVER ======
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on PORT ${PORT}`)
+);
