@@ -6,51 +6,55 @@ const passport = require("passport");
 const path = require("path");
 
 const app = express();
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
-// Passport config
+// ✅ Passport Config
 require("./passportConfig");
 
-// Routes
+// ✅ Routes
 const authRoutes = require("./routes/authRoutes");
 
-// Middlewares
+// ✅ Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Static Files
-app.use(express.static(__dirname));
+// ✅ Static Files (Better Security)
+app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Session
+// ✅ Session Setup
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === "production", // true in production
+     : 1000 * 60 * 60 * 24, // 1 day
+    },
   })
 );
 
-// Passport
+// ✅ Passport Initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
-// MongoDB Connect
+// ✅ MongoDB Connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Atlas Connected"))
-  .catch((err) => console.log("❌ MongoDB Error:", err));
+  .catch((err) => console.error("❌ MongoDB Error:", err));
 
-// AUTH ROUTES (IMPORTANT)
+// ✅ Auth Routes
 app.use("/", authRoutes);
 
-// Protected Dashboard (ONLY AFTER LOGIN)
+// ✅ Protected Dashboard
 app.get("/dashboard", (req, res) => {
   if (!req.user) return res.redirect("/login.html");
-  res.sendFile(path.join(__dirname, "dashboard.html"));
+  res.sendFile(path.join(__dirname, "public", "dashboard.html"));
 });
 
-// Logged-in User Data
+// ✅ Logged-in User Data API
 app.get("/user", (req, res) => {
   if (!req.user) return res.status(401).json({ error: "Not Logged In" });
 
@@ -62,12 +66,10 @@ app.get("/user", (req, res) => {
   });
 });
 
-// HOME PAGE
+// ✅ Home Page
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Start Server
-app.listen(port, () =>
-  console.log(`🚀 Server running at http://localhost:${port}`)
-);
+// ✅ Start Server
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
