@@ -18,7 +18,7 @@ const authRoutes = require("./routes/authRoutes");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// ✅ Static Files (Better Security)
+// ✅ Static Files
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -28,9 +28,8 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      secure: process.env.NODE_ENV === "production", // true in production
-      60 * 60 * 24, // 1 day
+    in production
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
   })
 );
