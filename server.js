@@ -28,7 +28,8 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    in production
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
   })
@@ -40,7 +41,7 @@ app.use(passport.session());
 
 // ✅ MongoDB Connection
 mongoose
-  .connect(process.env.MONGO_URI)
+ connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Atlas Connected"))
   .catch((err) => console.error("❌ MongoDB Error:", err));
 
