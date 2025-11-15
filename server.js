@@ -1,103 +1,72 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const path = require("path");
 
 const app = express();
 
-// ----------------- STATIC FRONTEND -------------------
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve STATIC files (HTML, CSS, JS, Images)
 app.use(express.static(path.join(__dirname)));
 
-// Default → index.html when opening Render URL
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+// ------------------- MONGODB CONNECT -------------------
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("🔥 MongoDB Connected"))
+  .catch((err) => console.log("❌ MongoDB Error:", err));
+
+// ------------------- ORDER MODEL -------------------
+const OrderSchema = new mongoose.Schema({
+  name: String,
+  mobile: String,
+  email: String,
+  product: String,
+  date: { type: Date, default: Date.now },
 });
 
-// ----------------- MIDDLEWARE -------------------
-app.use(express.json());
+const Order = mongoose.model("Order", OrderSchema);
 
-// ----------------- SESSION SETUP -------------------
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "supersecret123",
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
-      ttl: 14 * 24 * 60 * 60,
-    }),
-    cookie: {
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 14 * 24 * 60 * 60 * 1000,
-    },
-  })
-);
+// ------------------- PLACE ORDER API -------------------
+app.post("/place-order", async (req, res) => {
+  try {
+    const { name, mobile, email, product } = req.body;
 
-// ----------------- PASSPORT SETUP -------------------
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/callback",
-    },
-    (accessToken, refreshToken, profile, done) => {
-      return done(null, profile);
+    if (!name || !mobile || !product) {
+      return res.json({ success: false, message: "Missing fields" });
     }
-  )
-);
 
-passport.serializeUser((user, done) => done(null, user));
-passport.deserializeUser((user, done) => done(null, user));
+    const order = await Order.create({ name, mobile, email, product });
 
-// ----------------- GOOGLE AUTH ROUTES -------------------
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
-
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "/login.html",
-  }),
-  (req, res) => {
-    res.redirect("/dashboard.html");
+    return res.json({
+      success: true,
+      message: "Order placed successfully! We will contact you soon.",
+      orderId: order._id,
+    });
+  } catch (error) {
+    console.log("Order Error:", error);
+    return res.json({ success: false, message: "Server error" });
   }
-);
+});
 
-// ----------------- DEBUG ROUTE (IMPORTANT) -------------------
-app.get("/check", (req, res) => {
+// ------------------- ADMIN PANEL -------------------
+app.get("/admin", async (req, res) => {
+  const pass = req.query.pass;
+
+  if (pass !== "admin123") {
+    return res.send("❌ Unauthorized Access");
+  }
+
+  const orders = await Order.find().sort({ date: -1 });
+
   res.send(`
-    <h2>ENV CHECK</h2>
-    <p><b>Client ID:</b> ${process.env.GOOGLE_CLIENT_ID}</p>
-    <p><b>Client Secret (last 4):</b> ${
-      process.env.GOOGLE_CLIENT_SECRET
-        ? process.env.GOOGLE_CLIENT_SECRET.slice(-4)
-        : "NOT LOADED"
-    }</p>
+    <h2>📝 All Orders</h2>
+    <pre>${JSON.stringify(orders, null, 2)}</pre>
   `);
 });
 
-// ----------------- MONGO CONNECT -------------------
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("🔥 MongoDB connected"))
-  .catch((err) => {
-    console.log("❌ MongoDB error:", err);
-    process.exit(1);
-  });
-
-// ----------------- START SERVER -------------------
+// ------------------- START SERVER -------------------
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on PORT ${PORT}`));
