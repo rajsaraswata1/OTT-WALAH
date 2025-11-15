@@ -1,126 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Courses — OTT Wallah</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Premium Courses – OTT WALLAH</title>
 
+  <link rel="stylesheet" href="style.css" />
   <style>
-    .page-hero{
-      padding:60px 20px 20px;
-      text-align:center;
+    body {
+      background: #0d0d0d;
+      font-family: Poppins, sans-serif;
+      color: white;
     }
-    .page-hero h1{
-      font-size:38px;
-      font-weight:900;
+
+    .header {
+      background: #121212;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #ff0037;
     }
-    .page-hero p{
-      opacity:.75;
-      max-width:700px;
-      margin:10px auto 0;
+
+    .logo {
+      color: #ff0037;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .nav a {
+      margin-left: 20px;
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .title {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 40px;
+      font-weight: 700;
+      color: #ff0037;
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-top: 10px;
+      color: #bbbbbb;
+      font-size: 18px;
+    }
+
+    .course-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      padding: 40px;
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    .course-card {
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 10px #ff0037a6;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .course-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #ff0037;
+    }
+
+    .course-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .course-title {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .buy-btn {
+      margin-top: 10px;
+      display: inline-block;
+      background: #ff0037;
+      padding: 8px 15px;
+      border-radius: 6px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .buy-btn:hover {
+      background: #d6002f;
     }
   </style>
 </head>
 
 <body>
 
-<header class="header">
-  <div class="container header-inner">
-    <div class="brand">
-      <div class="brand-badge">OW</div>
-      <div>
-        <div style="font-size:18px;font-weight:900;">OTT WALLAH</div>
-        <div class="small">Online Learning</div>
-      </div>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">OTT WALLAH</div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="ott.html">OTT Apps</a>
+      <a href="courses.html">Courses</a>
+      <a href="editing.html">Editing Tools</a>
+    </nav>
+  </header>
+
+  <h1 class="title">Premium Courses</h1>
+  <p class="subtitle">Build skills with Coursera, Udemy, LinkedIn Learning & More</p>
+
+  <!-- COURSES GRID -->
+  <div class="course-container">
+
+    <div class="course-card">
+      <img src="uploads/Course1.png" />
+      <div class="course-title">Graphic Designing Complete Course</div>
+      <a href="details.html?course=graphic" class="buy-btn">View Details</a>
     </div>
 
-    <div class="header-actions">
-      <a class="btn" href="index.html">Home</a>
-      <a class="btn" href="cart.html">Cart</a>
-      <a class="btn" href="login.html">Login</a>
+    <div class="course-card">
+      <img src="uploads/Course2.png" />
+      <div class="course-title">Video Editing Masterclass</div>
+      <a href="details.html?course=editing" class="buy-btn">View Details</a>
     </div>
+
+    <div class="course-card">
+      <img src="uploads/Course3.png" />
+      <div class="course-title">Freelancing Mastery Training</div>
+      <a href="details.html?course=freelancing" class="buy-btn">View Details</a>
+    </div>
+
+    <div class="course-card">
+      <img src="uploads/Course4.png" />
+      <div class="course-title">Digital Marketing A–Z</div>
+      <a href="details.html?course=marketing" class="buy-btn">View Details</a>
+    </div>
+
   </div>
-</header>
-
-<section class="page-hero">
-  <h1>Online Courses</h1>
-  <p>Build skills with Coursera, Udemy, LinkedIn Learning, Skillshare and many more platforms.</p>
-</section>
-
-<div class="container search-row">
-  <input id="q" class="input" placeholder="Search course platform...">
-  <select id="sort" class="filter">
-    <option value="rel">Featured</option>
-    <option value="lh">Low → High</option>
-    <option value="hl">High → Low</option>
-    <option value="az">A → Z</option>
-  </select>
-</div>
-
-<section class="container section">
-  <div id="grid" class="grid"></div>
-</section>
-
-<script src="./data.js"></script>
-<script>
- const grid=document.getElementById("grid"), q=document.getElementById("q"), sort=document.getElementById("sort");
-
- function cardHTML(i){
-   return `
-     <div class="card">
-       <span class="ribbon">Courses</span>
-       <img class="logo" src="${i.logo}">
-       <div class="title">${i.name}</div>
-       <div class="small">${i.tags.join(" • ")}</div>
-       <div class="price">₹${i.price}${i.billing}</div>
-       <div class="card-actions">
-         <a class="link" href="details.html?id=${i.id}">View details</a>
-         <button class="btn" onclick="addToCart('${i.id}')">Add to cart</button>
-       </div>
-     </div>`;
- }
-
-async function addToCart(id) {
-
-  let user = await fetch("/user").then(r => {
-    if (r.status === 401) return null;
-    return r.json();
-  });
-
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
-
-  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  if (!cart.find(i => i.id === id)) cart.push({ id, qty: 1 });
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-  alert("Added to cart ✅");
-}
-
-
- function filter(){
-   let list=window.CATALOG.filter(i=>i.category=="courses");
-   let t=q.value.toLowerCase();
-   list=list.filter(i=>i.name.toLowerCase().includes(t));
-
-   switch(sort.value){
-     case "lh": list.sort((a,b)=>a.price-b.price); break;
-     case "hl": list.sort((a,b)=>b.price-a.price); break;
-     case "az": list.sort((a,b)=>a.name.localeCompare(b.name)); break;
-   }
-
-   grid.innerHTML=list.map(cardHTML).join("");
- }
-
- q.addEventListener("input", filter);
- sort.addEventListener("change", filter);
-
- filter();
-</script>
 
 </body>
 </html>
-
