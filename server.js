@@ -10,8 +10,7 @@ const path = require("path");
 const app = express();
 
 // ----------------- STATIC FRONTEND -------------------
-app.use(express.static(path.join(__dirname))); 
-// This serves index.html, login.html, dashboard.html etc.
+app.use(express.static(path.join(__dirname)));
 
 // Default → index.html when opening Render URL
 app.get("/", (req, res) => {
@@ -59,23 +58,33 @@ passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 
 // ----------------- GOOGLE AUTH ROUTES -------------------
-
-// Step 1 → From index.html login button
 app.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-// Step 2 → Google callback → redirect to dashboard
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
     failureRedirect: "/login.html",
   }),
   (req, res) => {
-    res.redirect("/dashboard.html"); // After login open dashboard
+    res.redirect("/dashboard.html");
   }
 );
+
+// ----------------- DEBUG ROUTE (IMPORTANT) -------------------
+app.get("/check", (req, res) => {
+  res.send(`
+    <h2>ENV CHECK</h2>
+    <p><b>Client ID:</b> ${process.env.GOOGLE_CLIENT_ID}</p>
+    <p><b>Client Secret (last 4):</b> ${
+      process.env.GOOGLE_CLIENT_SECRET
+        ? process.env.GOOGLE_CLIENT_SECRET.slice(-4)
+        : "NOT LOADED"
+    }</p>
+  `);
+});
 
 // ----------------- MONGO CONNECT -------------------
 mongoose
