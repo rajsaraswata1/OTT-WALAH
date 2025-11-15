@@ -3,142 +3,284 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OTT WALLAH — Premium OTT, Courses & Tools</title>
+  <title>OTT WALLAH — India's Cheapest OTT Store</title>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css">
+
   <style>
-    /* Small in-file styles for modal & buy button if your style.css doesn't cover them */
-    .buy-btn { display:inline-block; padding:8px 12px; border-radius:8px; background:#06b6d4; color:#042; text-decoration:none; cursor:pointer; margin-top:8px; }
-    .modal-overlay{ position:fixed; inset:0; background:rgba(2,6,23,0.7); display:none; align-items:center; justify-content:center; z-index:9999; }
-    .modal-box{ background:#071025; color:#fff; padding:18px; border-radius:12px; width:90%; max-width:420px; box-shadow:0 10px 30px rgba(0,0,0,.6); }
-    .modal-box input, .modal-box textarea, .modal-box select{ width:100%; padding:10px; margin:8px 0; border-radius:8px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.02); color:inherit; }
-    .modal-actions{ display:flex; gap:8px; justify-content:flex-end; margin-top:8px; }
-    .btn-secondary{ background:#111827; color:#fff; padding:10px 12px; border-radius:8px; border:none; cursor:pointer; }
-    .btn-primary{ background:#06b6d4; color:#022; padding:10px 12px; border-radius:8px; border:none; cursor:pointer; }
-    .order-msg{ margin-top:8px; color:#9fb0c9; font-size:14px; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      width: 100%;
+      padding: 20px 40px;
+      background: #0d0d0d;
+      border-bottom: 1px solid rgba(255,0,0,0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo {
+      font-size: 26px;
+      font-weight: 700;
+      color: #ff0000;
+      letter-spacing: 1px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .logo i {
+      font-size: 30px;
+      color: #fff;
+    }
+
+    .nav-links a {
+      margin-left: 20px;
+      color: #ccc;
+      text-decoration: none;
+      font-weight: 500;
+      transition: .3s;
+    }
+    .nav-links a:hover {
+      color: #ff0000;
+    }
+
+    .contact-btn {
+      background: #ff0000;
+      padding: 10px 18px;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* HERO */
+    .hero {
+      width: 100%;
+      padding: 60px 20px;
+      background: url('/uploads/banner1.png') center/cover no-repeat fixed;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.3;
+      text-shadow: 0 0 15px #000;
+    }
+    .hero span {
+      color: #ff0000;
+    }
+    .hero p {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #ccc;
+    }
+
+    .hero-buttons {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .btn {
+      padding: 12px 22px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      text-decoration:none;
+    }
+    .btn-primary {
+      background: #ff0000;
+      color: #fff;
+      font-weight:700;
+    }
+    .btn-dark {
+      background: #111;
+      color: #fff;
+      font-weight:600;
+      border:1px solid #333;
+    }
+
+    /* SECTION */
+    .section {
+      padding: 50px 20px;
+      text-align: center;
+    }
+    .section h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #ff0000;
+    }
+
+    /* CARDS */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: #111;
+      border:1px solid #222;
+      padding:15px;
+      border-radius:10px;
+      transition:.3s;
+      cursor:pointer;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      border:1px solid #ff0000;
+      box-shadow:0 0 20px rgba(255,0,0,0.3);
+    }
+    .card img {
+      width: 100%;
+      border-radius:8px;
+      margin-bottom:10px;
+    }
+    .card p {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .buy-btn {
+      margin-top:10px;
+      display:inline-block;
+      padding:8px 12px;
+      background:#ff0000;
+      color:#fff;
+      border-radius:6px;
+      font-size:14px;
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #0d0d0d;
+      border-top:1px solid rgba(255,0,0,0.3);
+      margin-top:50px;
+    }
+    footer p {
+      color:#888;
+      font-size:14px;
+    }
   </style>
 </head>
 
-<body class="dark">
+<body>
 
 <!-- NAVBAR -->
-<header class="header neon-glow">
-  <div class="container nav">
-    <a class="logo">
-      <i class="ri-clapperboard-fill"></i> OTT <span>WALLAH</span>
-    </a>
-
-    <nav class="nav-links">
-      <a>OTT Apps</a>
-      <a>Courses</a>
-      <a>Editing Tools</a>
-      <a>FAQ</a>
-    </nav>
-
-    <a href="https://wa.me/919837777006?text=Hi%20OTT%20WALLAH%2C%20I%20need%20help" class="btn-primary" style="text-decoration:none;">Contact</a>
+<div class="navbar">
+  <div class="logo">
+    <i class="ri-clapperboard-fill"></i> OTT <span style="color:white">WALLAH</span>
   </div>
-</header>
+
+  <div class="nav-links">
+    <a href="#ott">OTT Apps</a>
+    <a href="#courses">Courses</a>
+    <a href="#tools">Editing Tools</a>
+    <a href="#faq">FAQ</a>
+  </div>
+
+  <a href="https://wa.me/919837777006" class="contact-btn">Contact</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="slider">
-    <div class="slides">
-      <img src="/uploads/banner1.png" alt="banner">
-      <img src="/uploads/banner2.png" alt="banner">
-      <img src="/uploads/banner3.png" alt="banner">
-    </div>
-  </div>
+  <h1>India's Cheapest <span>OTT</span> & <span>Course</span> Marketplace</h1>
+  <p>Get Premium Plans at 90% Discount • 100% Safe • Instant Delivery</p>
 
-  <div class="hero-content container">
-    <h1 class="headline">Unlimited <span>OTT</span>, <span>Courses</span> & <span>Editing Tools</span></h1>
-    <p class="subtext">India's most premium digital marketplace at the cheapest price.</p>
-
-    <div class="hero-buttons">
-      <a class="btn-primary" href="#collections"><i class="ri-flashlight-fill"></i> Explore All</a>
-      <!-- Quick buy example: opens modal with default product -->
-      <a class="buy-btn" onclick="openOrderModal('Starter Pack - All OTT Combo')"><i class="ri-shopping-cart-2-line"></i> Buy Starter Pack</a>
-    </div>
-
-    <div class="hero-stats">
-      <div><strong>12,000+</strong><span>Happy Users</span></div>
-      <div><strong>4.9/5</strong><span>User Rating</span></div>
-      <div><strong>Instant</strong><span>Delivery</span></div>
-    </div>
+  <div class="hero-buttons">
+    <a href="#ott" class="btn btn-primary">Explore Now</a>
+    <a href="#courses" class="btn btn-dark">View Courses</a>
   </div>
 </section>
 
-<!-- TRENDING -->
-<section class="section" id="trending">
-  <div class="container section-head"><h2><i class="ri-fire-fill"></i> Trending OTT Apps</h2></div>
-  <div class="container scroll-row">
-    <div class="card"><img src="/uploads/Netflix.png"><p>Netflix Premium</p><a class="buy-btn" onclick="openOrderModal('Netflix Premium')">Buy Now</a></div>
-    <div class="card"><img src="/uploads/Hotstar.png"><p>Hotstar VIP</p><a class="buy-btn" onclick="openOrderModal('Hotstar VIP')">Buy Now</a></div>
-    <div class="card"><img src="/uploads/AmazonPrime.png"><p>Prime Video</p><a class="buy-btn" onclick="openOrderModal('Prime Video')">Buy Now</a></div>
-    <div class="card"><img src="/uploads/Zee5.png"><p>ZEE5 All Access</p><a class="buy-btn" onclick="openOrderModal('ZEE5 All Access')">Buy Now</a></div>
-    <div class="card"><img src="/uploads/SonyLiv.png"><p>Sony LIV Premium</p><a class="buy-btn" onclick="openOrderModal('Sony LIV Premium')">Buy Now</a></div>
-  </div>
-</section>
+<!-- TRENDING OTT -->
+<section class="section" id="ott">
+  <h2>🔥 Trending OTT Plans</h2>
 
-<!-- COLLECTIONS -->
-<section class="section neon-box" id="collections">
-  <div class="container section-head"><h2><i class="ri-stack-fill"></i> Premium OTT Collections</h2></div>
-  <div class="collections container">
-    <div class="collection-card"><img src="/uploads/bannerOTT.png"><h3>All OTT Combo Pack</h3><a class="buy-btn" onclick="openOrderModal('All OTT Combo Pack')">Buy Now</a></div>
-    <div class="collection-card"><img src="/uploads/bannerSports.png"><h3>Sports OTT Pack</h3><a class="buy-btn" onclick="openOrderModal('Sports OTT Pack')">Buy Now</a></div>
-    <div class="collection-card"><img src="/uploads/bannerKids.png"><h3>Kids & Family Pack</h3><a class="buy-btn" onclick="openOrderModal('Kids & Family Pack')">Buy Now</a></div>
+  <div class="grid">
+    <div class="card">
+      <img src="/uploads/Netflix.png">
+      <p>Netflix Premium</p>
+      <a class="buy-btn" onclick="openOrderModal('Netflix Premium')">Buy Now</a>
+    </div>
+
+    <div class="card">
+      <img src="/uploads/Hotstar.png">
+      <p>Disney Hotstar</p>
+      <a class="buy-btn" onclick="openOrderModal('Hotstar Premium')">Buy Now</a>
+    </div>
+
+    <div class="card">
+      <img src="/uploads/AmazonPrime.png">
+      <p>Amazon Prime</p>
+      <a class="buy-btn" onclick="openOrderModal('Prime Video')">Buy Now</a>
+    </div>
+
+    <div class="card">
+      <img src="/uploads/Zee5.png">
+      <p>ZEE5 Premium</p>
+      <a class="buy-btn" onclick="openOrderModal('ZEE5 Premium')">Buy Now</a>
+    </div>
   </div>
 </section>
 
 <!-- COURSES -->
-<section class="section">
-  <div class="container section-head"><h2><i class="ri-graduation-cap-fill"></i> Premium Courses</h2></div>
-  <div class="grid container">
-    <div class="card2"><img src="/uploads/Course1.png"><h4>Graphic Designing Full Course</h4><a class="buy-btn" onclick="openOrderModal('Graphic Designing Full Course')">Buy Now</a></div>
-    <div class="card2"><img src="/uploads/Course2.png"><h4>Video Editing Mastery</h4><a class="buy-btn" onclick="openOrderModal('Video Editing Mastery')">Buy Now</a></div>
-    <div class="card2"><img src="/uploads/Course3.png"><h4>Freelancing Masterclass</h4><a class="buy-btn" onclick="openOrderModal('Freelancing Masterclass')">Buy Now</a></div>
-    <div class="card2"><img src="/uploads/Course4.png"><h4>Digital Marketing A-Z</h4><a class="buy-btn" onclick="openOrderModal('Digital Marketing A-Z')">Buy Now</a></div>
+<section class="section" id="courses">
+  <h2>📚 Premium Courses</h2>
+
+  <div class="grid">
+    <div class="card">
+      <img src="/uploads/Course1.png">
+      <p>Graphic Designing Full Course</p>
+      <a class="buy-btn" onclick="openOrderModal('Graphic Design Course')">Buy Now</a>
+    </div>
+
+    <div class="card">
+      <img src="/uploads/Course2.png">
+      <p>Video Editing Mastery</p>
+      <a class="buy-btn" onclick="openOrderModal('Video Editing Mastery')">Buy Now</a>
+    </div>
+
+    <div class="card">
+      <img src="/uploads/Course3.png">
+      <p>Freelancing Masterclass</p>
+      <a class="buy-btn" onclick="openOrderModal('Freelancing Masterclass')">Buy Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="section" id="tools">
+  <h2>🛠 Editing Tools</h2>
+
+  <div class="grid">
+    <div class="card"><img src="/uploads/Capcut.png"><p>CapCut Pro Templates</p><a class="buy-btn" onclick="openOrderModal('Capcut Pro')">Buy Now</a></div>
+    <div class="card"><img src="/uploads/Premiere.png"><p>Premiere Pro Presets</p><a class="buy-btn" onclick="openOrderModal('Premiere Presets')">Buy Now</a></div>
+    <div class="card"><img src="/uploads/AE.png"><p>After Effects Packs</p><a class="buy-btn" onclick="openOrderModal('AE Packs')">Buy Now</a></div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="footer">
-  <div class="container footer-grid">
-    <div><h3 class="logo"><i class="ri-clapperboard-fill"></i> OTT WALLAH</h3><p>India’s most premium OTT & digital store.</p></div>
-    <div><h4>Support</h4><p>Email: rajsarswata1@gmail.com</p><p>Contact: +91 9837777006</p></div>
-    <div><h4>Follow</h4><p>Instagram</p><p>YouTube</p></div>
-  </div>
-  <p class="copy">© 2025 OTT WALLAH — All Rights Reserved</p>
+<footer>
+  <p>© 2025 OTT WALLAH • All Rights Reserved</p>
 </footer>
 
-<!-- ORDER MODAL -->
-<div class="modal-overlay" id="orderOverlay">
-  <div class="modal-box">
-    <h3>Complete your order</h3>
-
-    <label>Your Name</label>
-    <input id="orderName" placeholder="Full name" />
-
-    <label>Mobile Number</label>
-    <input id="orderMobile" placeholder="10-digit mobile" />
-
-    <label>Email (optional)</label>
-    <input id="orderEmail" placeholder="you@example.com" />
-
-    <label>Product</label>
-    <input id="orderProduct" readonly />
-
-    <div class="modal-actions">
-      <button class="btn-secondary" onclick="closeOrderModal()">Cancel</button>
-      <button class="btn-primary" onclick="placeOrder()">Place Order</button>
-    </div>
-
-    <p class="order-msg" id="orderMsg"></p>
-  </div>
-</div>
-
-<script src="app.js"></script>
 </body>
 </html>
 
