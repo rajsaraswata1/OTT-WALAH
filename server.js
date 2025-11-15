@@ -30,7 +30,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       secure: process.env.NODE_ENV === "production", // true in production
-     : 1000 * 60 * 60 * 24, // 1 day
+      60 * 60 * 24, // 1 day
     },
   })
 );
