@@ -31,7 +31,7 @@
 
     /* HERO BANNER */
     .hero {
-      background:url("/uploads/banner1.png") center/cover no-repeat;
+      background:url("/uploads/banner1.jpg") center/cover no-repeat;
       padding:150px 20px; text-align:center;
     }
     .hero h1 {
@@ -115,17 +115,17 @@
   <div class="cat-grid">
 
     <div class="cat-box" onclick="location.href='ott.html'">
-      <img src="/uploads/bannerOTT.png">
+      <img src="/uploads/bannerOTT.jpg">
       <h3>OTT Apps • Netflix • Prime • Hotstar</h3>
     </div>
 
     <div class="cat-box" onclick="location.href='courses.html'">
-      <img src="/uploads/Course1.png">
+      <img src="/uploads/Course1.jpg">
       <h3>Courses • Editing • Freelancing</h3>
     </div>
 
     <div class="cat-box" onclick="location.href='editing.html'">
-      <img src="/uploads/Capcut.png">
+      <img src="/uploads/Capcut.jpg">
       <h3>Editing Tools • Capcut • AE • Premiere</h3>
     </div>
 
@@ -175,6 +175,121 @@
 </footer>
 
 <script src="app.js"></script>
+<!-- PAYMENT MODAL -->
+<div id="payModal" class="pay-modal">
+  <div class="pay-box">
+    
+    <button class="close-pay" onclick="closePayModal()">✖</button>
+
+    <h2>Complete Your Payment</h2>
+    <p class="p-text">
+      Product: 
+      <span id="payProductName" style="color:#ff0000;font-weight:700;"></span>
+    </p>
+
+    <h3>UPI Payment</h3>
+    <div class="upi-box">
+      <p>Scan & Pay:</p>
+
+      <!-- Your QR image from uploads folder -->
+      <img src="/uploads/QR.png" class="qr-img">
+
+      <p>OR Pay to UPI ID:</p>
+      <div class="upi-id">**yourupi@okaxis**</div>
+
+      <button class="copy-btn" onclick="copyUPI()">Copy UPI ID</button>
+    </div>
+
+    <h3>After Payment</h3>
+    <p class="p-small">Click below to send payment screenshot:</p>
+
+    <a id="whatsAppLink" class="wa-btn" target="_blank">
+      Send on WhatsApp
+    </a>
+
+  </div>
+</div>
+
+<style>
+  .pay-modal {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.8);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index: 9999;
+  }
+  .pay-box {
+    background:#111;
+    padding:30px;
+    width:90%; max-width:400px;
+    border-radius:20px;
+    border:1px solid #ff0000;
+    text-align:center;
+  }
+  .close-pay {
+    background:none;
+    border:none;
+    color:white;
+    font-size:20px;
+    float:right;
+    cursor:pointer;
+  }
+  .qr-img {
+    width:180px;
+    margin:10px auto;
+    border-radius:10px;
+  }
+  .upi-id {
+    background:#222;
+    padding:8px;
+    margin:10px auto;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:600;
+  }
+  .copy-btn {
+    background:#ff0000;
+    padding:8px 14px;
+    border:none;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .wa-btn {
+    display:block;
+    margin-top:20px;
+    background:#25D366;
+    padding:12px;
+    color:white;
+    font-weight:700;
+    border-radius:8px;
+    text-decoration:none;
+  }
+</style>
+
+<script>
+  function openPayModal(productName) {
+    document.getElementById("payModal").style.display = "flex";
+    document.getElementById("payProductName").innerText = productName;
+
+    document.getElementById("whatsAppLink").href =
+      "https://wa.me/919837777006?text=I%20Have%20Paid%20For%20"
+      + encodeURIComponent(productName)
+      + "%20Please%20Activate%20My%20Plan.";
+  }
+
+  function closePayModal() {
+    document.getElementById("payModal").style.display = "none";
+  }
+
+  function copyUPI() {
+    navigator.clipboard.writeText("yourupi@okaxis");
+    alert("UPI ID Copied!");
+  }
+</script>
 
 </body>
 </html>
