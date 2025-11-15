@@ -4,33 +4,41 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const passport = require("passport");
-const cors = require("cors");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const path = require("path");
 
 const app = express();
 
-// ------------------- MIDDLEWARE -------------------
-app.use(express.json());
-app.use(cors());
+// ----------------- STATIC FRONTEND -------------------
+app.use(express.static(path.join(__dirname))); 
+// This serves index.html, login.html, dashboard.html etc.
 
-// ------------------- SESSION -------------------
+// Default → index.html when opening Render URL
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+// ----------------- MIDDLEWARE -------------------
+app.use(express.json());
+
+// ----------------- SESSION SETUP -------------------
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "mysupersecret",
+    secret: process.env.SESSION_SECRET || "supersecret123",
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
-      ttl: 14 * 24 * 60 * 60, // 14 days
+      ttl: 14 * 24 * 60 * 60,
     }),
     cookie: {
-      secure: process.env.NODE_ENV === "production", // Render = true
+      secure: process.env.NODE_ENV === "production",
       maxAge: 14 * 24 * 60 * 60 * 1000,
     },
   })
 );
 
-// ------------------- PASSPORT SETUP -------------------
+// ----------------- PASSPORT SETUP -------------------
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -41,39 +49,35 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/auth/google/callback",
     },
-    (accessToken, refreshToken, profile, cb) => {
-      return cb(null, profile); // save user if you want
+    (accessToken, refreshToken, profile, done) => {
+      return done(null, profile);
     }
   )
 );
 
-passport.serializeUser((user, cb) => cb(null, user));
-passport.deserializeUser((obj, cb) => cb(null, obj));
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((user, done) => done(null, user));
 
-// ------------------- GOOGLE AUTH ROUTES -------------------
+// ----------------- GOOGLE AUTH ROUTES -------------------
 
-// Step 1: Redirect user to Google login
+// Step 1 → From index.html login button
 app.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-// Step 2: Google redirects here after login
+// Step 2 → Google callback → redirect to dashboard
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "/auth/fail",
+    failureRedirect: "/login.html",
   }),
   (req, res) => {
-    res.send("Google Login Successful!");
+    res.redirect("/dashboard.html"); // After login open dashboard
   }
 );
 
-app.get("/auth/fail", (req, res) => {
-  res.send("Google Login Failed");
-});
-
-// ------------------- MONGO DB CONNECTION -------------------
+// ----------------- MONGO CONNECT -------------------
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -81,15 +85,10 @@ mongoose
   })
   .then(() => console.log("🔥 MongoDB connected"))
   .catch((err) => {
-    console.log("❌ MongoDB Error:", err);
+    console.log("❌ MongoDB error:", err);
     process.exit(1);
   });
 
-// ------------------- BASIC ROUTE -------------------
-app.get("/", (req, res) => {
-  res.send("Backend Running Successfully on Render!");
-});
-
-// ------------------- START SERVER -------------------
+// ----------------- START SERVER -------------------
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on PORT ${PORT}`));
