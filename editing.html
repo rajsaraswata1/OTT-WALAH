@@ -2,120 +2,188 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Editing Apps — OTT Wallah</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="./style.css">
+  <title>OTT WALLAH — Editing Tools</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
 
   <style>
-    .page-hero{
-      padding:60px 20px 20px;
-      text-align:center;
+    body {
+      background:#000;
+      margin:0;
+      font-family:Poppins, sans-serif;
+      color:#fff;
     }
-    .page-hero h1{
-      font-size:38px;
+
+    h1 {
+      text-align:center;
+      padding:30px 0;
+      font-size:40px;
+      color:#ff0000;
       font-weight:900;
     }
-    .page-hero p{ opacity:.75; max-width:700px; margin:10px auto 0; }
+
+    .grid {
+      padding:30px;
+      display:grid;
+      gap:25px;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .card {
+      background:#111;
+      padding:18px;
+      border-radius:16px;
+      text-align:center;
+      border:1px solid #222;
+      transition:0.3s;
+    }
+
+    .card:hover {
+      transform:translateY(-8px);
+      border-color:#ff0000;
+    }
+
+    img {
+      width:110px;
+      height:110px;
+      object-fit:contain;
+    }
+
+    .name {
+      margin-top:12px;
+      font-size:18px;
+      font-weight:600;
+    }
+
+    .price {
+      margin-top:5px;
+      color:#ff0000;
+      font-weight:700;
+    }
+
+    .btn-box {
+      margin-top:15px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+    }
+
+    .btn {
+      padding:8px 14px;
+      border-radius:6px;
+      font-size:14px;
+      font-weight:700;
+      text-decoration:none;
+    }
+
+    .details {
+      background:#222;
+      color:#fff;
+    }
+
+    .buy {
+      background:#ff0000;
+      color:#fff;
+    }
   </style>
 </head>
 
 <body>
 
-<header class="header">
-  <div class="container header-inner">
-    <div class="brand">
-      <div class="brand-badge">OW</div>
-      <div>
-        <div style="font-size:18px;font-weight:900;">OTT WALLAH</div>
-        <div class="small">Editing & Tools</div>
-      </div>
-    </div>
+<h1>🎬 Premium Editing Tools</h1>
 
-    <div class="header-actions">
-      <a class="btn" href="index.html">Home</a>
-      <a class="btn" href="cart.html">Cart</a>
-      <a class="btn" href="login.html">Login</a>
+<div class="grid">
+
+  <!-- CAPCUT -->
+  <div class="card">
+    <img src="/uploads/Capcut.png">
+    <div class="name">CapCut Pro Templates</div>
+    <div class="price">₹39 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=capcut" class="btn details">Details</a>
+      <a href="#" class="btn buy">Buy Now</a>
     </div>
   </div>
-</header>
 
-<section class="page-hero">
-  <h1>Editing Apps</h1>
-  <p>Explore Canva, Photoshop, Premiere Pro, After Effects, Illustrator and more pro editing tools.</p>
-</section>
+  <!-- PREMIERE PRO -->
+  <div class="card">
+    <img src="/uploads/premiere-pro.png">
+    <div class="name">Premiere Pro Presets</div>
+    <div class="price">₹49 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=premiere" class="btn details">Details</a>
+      <a href="#" class="btn buy">Buy Now</a>
+    </div>
+  </div>
 
-<div class="container search-row">
-  <input id="q" class="input" placeholder="Search editing tool...">
-  <select id="sort" class="filter">
-    <option value="rel">Featured</option>
-    <option value="lh">Low → High</option>
-    <option value="hl">High → Low</option>
-    <option value="az">Name A → Z</option>
-  </select>
+  <!-- AFTER EFFECTS -->
+  <div class="card">
+    <img src="/uploads/AE.png">
+    <div class="name">After Effects Packs</div>
+    <div class="price">₹59 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=ae" class="btn details">Details</a>
+      <a href="#" class="btn buy">Buy Now</a>
+    </div>
+  </div>
+
+  <!-- FILMORA -->
+  <div class="card">
+    <img src="/uploads/Filmora.png">
+    <div class="name">Filmora Plugins</div>
+    <div class="price">₹49 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=filmora" class="btn details">Details</a>
+      <a href="#" class="btn buy">Buy Now</a>
+    </div>
+  </div>
+
+  <!-- ILLUSTRATOR -->
+  <div class="card">
+    <img src="/uploads/illustrator.png">
+    <div class="name">Illustrator Tools Pack</div>
+    <div class="price">₹35 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=illustrator" class="btn details">Details</a>
+      <a href="#" class="btn buy">Buy Now</a>
+    </div>
+  </div>
+
+  <!-- PHOTOSHOP -->
+  <div class="card">
+    <img src="/uploads/photoshop.png">
+    <div class="name">Photoshop Editing Tools</div>
+    <div class="price">₹45 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=photoshop" class="btn details">Details</a>
+      <a href="#" class="btn buy">Buy Now</a>
+    </div>
+  </div>
+
+  <!-- CANVA -->
+  <div class="card">
+    <img src="/uploads/canava.png">
+    <div class="name">Canva Pro Templates</div>
+    <div class="price">₹39 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=canva" class="btn details">Details</a>
+      <a href="#" class="btn buy">Buy Now</a>
+    </div>
+  </div>
+
+  <!-- PICSART -->
+  <div class="card">
+    <img src="/uploads/picsart.png">
+    <div class="name">PicsArt Editing Kits</div>
+    <div class="price">₹29 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=picsart" class="btn details">Details</a>
+      <a href="#" class="btn buy">Buy Now</a>
+    </div>
+  </div>
+
 </div>
-
-<section class="container section">
-  <div id="grid" class="grid"></div>
-</section>
-
-<script src="./data.js"></script>
-<script>
-  const grid=document.getElementById("grid"), q=document.getElementById("q"), sort=document.getElementById("sort");
-
-  function cardHTML(i){
-    return `
-      <div class="card">
-        <span class="ribbon">Editing</span>
-        <img class="logo" src="${i.logo}">
-        <div class="title">${i.name}</div>
-        <div class="small">${i.tags.join(" • ")}</div>
-        <div class="price">₹${i.price}${i.billing}</div>
-        <div class="card-actions">
-          <a class="link" href="details.html?id=${i.id}">View details</a>
-          <button class="btn" onclick="addToCart('${i.id}')">Add to cart</button>
-        </div>
-      </div>`;
-  }
-
-  async function addToCart(id) {
-
-  let user = await fetch("/user").then(r => {
-    if (r.status === 401) return null;
-    return r.json();
-  });
-
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
-
-  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  if (!cart.find(i => i.id === id)) cart.push({ id, qty: 1 });
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-  alert("Added to cart ✅");
-}
-
-
-  function filter(){
-    let list=window.CATALOG.filter(i=>i.category=="editing");
-    let t=q.value.toLowerCase();
-    list=list.filter(i=>i.name.toLowerCase().includes(t));
-
-    switch(sort.value){
-      case "lh": list.sort((a,b)=>a.price-b.price); break;
-      case "hl": list.sort((a,b)=>b.price-a.price); break;
-      case "az": list.sort((a,b)=>a.name.localeCompare(b.name)); break;
-    }
-    grid.innerHTML=list.map(cardHTML).join("");
-  }
-
-  q.addEventListener("input", filter);
-  sort.addEventListener("change", filter);
-
-  filter();
-</script>
 
 </body>
 </html>
-
