@@ -14,61 +14,125 @@
       color: #fff;
     }
 
+    /* Main Container */
     .container {
-      max-width: 900px;
+      max-width: 1100px;
       margin: 50px auto;
       padding: 20px;
     }
 
     .box {
       background: #111;
-      padding: 25px;
-      border-radius: 15px;
-      border: 1px solid #222;
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid #ff0000;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
     }
 
+    /* Product Section */
     .top {
       display: flex;
-      gap: 25px;
+      gap: 35px;
       flex-wrap: wrap;
+      align-items: center;
     }
 
-    img {
-      width: 240px;
-      height: 240px;
+    #product-img {
+      width: 300px;
+      height: 300px;
       object-fit: contain;
       background: #000;
-      border-radius: 12px;
+      border-radius: 14px;
+      border: 1px solid #222;
+      padding: 10px;
     }
 
     h1 {
-      font-size: 34px;
+      font-size: 38px;
       color: #ff0000;
       margin: 0;
+      font-weight: 900;
     }
 
     .price {
-      font-size: 26px;
+      font-size: 30px;
       color: #ff0000;
       font-weight: 700;
-      margin: 10px 0;
+      margin: 12px 0;
+    }
+
+    h3 {
+      margin-top: 30px;
+      font-size: 22px;
+      color: #ff0000;
     }
 
     ul {
-      margin-top: 10px;
+      margin-top: 12px;
       padding-left: 20px;
+      font-size: 17px;
+      line-height: 27px;
     }
 
     .btn {
       display: inline-block;
-      margin-top: 20px;
+      margin-top: 25px;
       background: #ff0000;
-      padding: 14px 22px;
+      padding: 15px 28px;
       color: #fff;
-      font-weight: 700;
-      border-radius: 8px;
+      font-weight: 800;
+      font-size: 20px;
+      border-radius: 10px;
       text-decoration: none;
+      transition: .3s;
+    }
+
+    .btn:hover {
+      background: #cc0000;
+      transform: translateY(-3px);
+    }
+
+    /* Trending Section */
+    .trending-title {
+      margin-top: 70px;
+      font-size: 32px;
+      font-weight: 900;
+      color: #ff0000;
+      text-align: center;
+    }
+
+    .trend-grid {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 25px;
+    }
+
+    .trend-card {
+      background: #111;
+      padding: 15px;
+      border-radius: 15px;
+      border: 1px solid #222;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .trend-card:hover {
+      transform: translateY(-8px);
+      border-color: #ff0000;
+      box-shadow: 0 0 18px rgba(255, 0, 0, 0.4);
+    }
+
+    .trend-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .trend-name {
+      margin-top: 12px;
       font-size: 18px;
+      font-weight: 700;
     }
   </style>
 </head>
@@ -78,6 +142,7 @@
   <div class="container">
     <div class="box">
 
+      <!-- PRODUCT BOX -->
       <div class="top">
         <img id="product-img">
 
@@ -96,6 +161,34 @@
       <a id="buyBtn" class="btn">Buy Now</a>
 
     </div>
+
+    <!-- TRENDING SECTION -->
+    <h2 class="trending-title">🔥 Trending OTT Plans</h2>
+
+    <div class="trend-grid">
+
+      <div class="trend-card" onclick="location.href='details.html?id=netflix'">
+        <img src="/uploads/netflix.png">
+        <div class="trend-name">Netflix Premium</div>
+      </div>
+
+      <div class="trend-card" onclick="location.href='details.html?id=primevideo'">
+        <img src="/uploads/primevideo.png">
+        <div class="trend-name">Prime Video</div>
+      </div>
+
+      <div class="trend-card" onclick="location.href='details.html?id=hotstar'">
+        <img src="/uploads/JioHotstar.png">
+        <div class="trend-name">Hotstar Super</div>
+      </div>
+
+      <div class="trend-card" onclick="location.href='details.html?id=zee5'">
+        <img src="/uploads/zee5.png">
+        <div class="trend-name">ZEE5 Premium</div>
+      </div>
+
+    </div>
+
   </div>
 
   <script src="data.js"></script>
@@ -118,10 +211,42 @@
     product.features.forEach(f => listHTML += `<li>${f}</li>`);
     document.getElementById("product-features").innerHTML = listHTML;
 
-    // BUY BUTTON → WhatsApp Message
+    // BUY BUTTON WHATSAPP
     document.getElementById("buyBtn").href =
       `https://wa.me/919837777006?text=Hi%20I%20want%20to%20buy%20${encodeURIComponent(product.name)}`;
   </script>
+
+
+  <!-- PAYMENT MODAL (same as before) -->
+  <div id="payModal" class="pay-modal">
+    <div class="pay-box">
+
+      <button class="close-pay" onclick="closePayModal()">✖</button>
+
+      <h2>Complete Your Payment</h2>
+      <p class="p-text">
+        Product:
+        <span id="payProductName" style="color:#ff0000;font-weight:700;"></span>
+      </p>
+
+      <h3>UPI Payment</h3>
+      <div class="upi-box">
+        <p>Scan & Pay:</p>
+        <img src="/uploads/QR.png" class="qr-img">
+
+        <p>OR Pay to UPI ID:</p>
+        <div class="upi-id">yourupi@okaxis</div>
+
+        <button class="copy-btn" onclick="copyUPI()">Copy UPI ID</button>
+      </div>
+
+      <h3>After Payment</h3>
+      <p class="p-small">Send screenshot below:</p>
+
+      <a id="whatsAppLink" class="wa-btn" target="_blank">Send on WhatsApp</a>
+
+    </div>
+  </div>
 
 </body>
 

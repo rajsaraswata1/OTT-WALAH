@@ -18,80 +18,92 @@
     h1 {
       text-align:center;
       padding:30px 0;
-      font-size:40px;
+      font-size:42px;
       color:#ff0000;
       font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:1px;
     }
 
+    .sub {
+      text-align:center;
+      color:#bbb;
+      margin-top:-10px;
+      font-size:18px;
+      margin-bottom:30px;
+    }
+
+    /* Grid */
     .grid {
       padding:30px;
       display:grid;
       gap:25px;
-      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
+      max-width:1400px;
+      margin:auto;
     }
 
+    /* Cards */
     .card {
       background:#111;
-      padding:18px;
-      border-radius:16px;
+      padding:25px 20px;
+      border-radius:20px;
       text-align:center;
       border:1px solid #222;
-      transition:0.3s;
+      transition:.3s;
+      cursor:pointer;
+      box-shadow:0 0 10px rgba(255,0,0,0.15);
     }
 
     .card:hover {
-      transform:translateY(-8px);
+      transform:translateY(-10px);
       border-color:#ff0000;
+      box-shadow:0 0 25px rgba(255,0,0,0.4);
     }
 
     img {
-      width:110px;
-      height:110px;
+      width:120px;
+      height:120px;
       object-fit:contain;
     }
 
     .name {
       margin-top:12px;
-      font-size:18px;
-      font-weight:600;
+      font-size:19px;
+      font-weight:700;
     }
 
     .price {
       margin-top:5px;
       color:#ff0000;
-      font-weight:700;
+      font-weight:800;
+      font-size:18px;
     }
 
     .btn-box {
       margin-top:15px;
       display:flex;
       justify-content:center;
-      gap:10px;
+      gap:12px;
     }
 
     .btn {
-      padding:8px 14px;
-      border-radius:6px;
+      padding:8px 15px;
+      border-radius:8px;
       font-size:14px;
       font-weight:700;
       text-decoration:none;
     }
 
-    .details {
-      background:#222;
-      color:#fff;
-    }
-
-    .buy {
-      background:#ff0000;
-      color:#fff;
-    }
+    .details { background:#222; color:#fff; }
+    .buy { background:#ff0000; color:#fff; }
   </style>
 </head>
 
 <body>
 
 <h1>🎬 Premium Editing Tools</h1>
+<p class="sub">CapCut • Premiere • After Effects • Filmora • Photoshop • Canva Pro & More</p>
 
 <div class="grid">
 
@@ -102,29 +114,29 @@
     <div class="price">₹39 Only</div>
     <div class="btn-box">
       <a href="details.html?id=capcut" class="btn details">Details</a>
-      <a href="#" class="btn buy">Buy Now</a>
+      <a onclick="openPayModal('CapCut Pro Templates')" class="btn buy">Buy Now</a>
     </div>
   </div>
 
-  <!-- PREMIERE PRO -->
+  <!-- PREMIERE -->
   <div class="card">
     <img src="/uploads/premiere-pro.png">
     <div class="name">Premiere Pro Presets</div>
     <div class="price">₹49 Only</div>
     <div class="btn-box">
       <a href="details.html?id=premiere" class="btn details">Details</a>
-      <a href="#" class="btn buy">Buy Now</a>
+      <a onclick="openPayModal('Premiere Pro Presets')" class="btn buy">Buy Now</a>
     </div>
   </div>
 
-  <!-- AFTER EFFECTS -->
+  <!-- AFTER EFFECT -->
   <div class="card">
     <img src="/uploads/AE.png">
     <div class="name">After Effects Packs</div>
     <div class="price">₹59 Only</div>
     <div class="btn-box">
       <a href="details.html?id=ae" class="btn details">Details</a>
-      <a href="#" class="btn buy">Buy Now</a>
+      <a onclick="openPayModal('After Effects Packs')" class="btn buy">Buy Now</a>
     </div>
   </div>
 
@@ -135,18 +147,7 @@
     <div class="price">₹49 Only</div>
     <div class="btn-box">
       <a href="details.html?id=filmora" class="btn details">Details</a>
-      <a href="#" class="btn buy">Buy Now</a>
-    </div>
-  </div>
-
-  <!-- ILLUSTRATOR -->
-  <div class="card">
-    <img src="/uploads/illustrator.png">
-    <div class="name">Illustrator Tools Pack</div>
-    <div class="price">₹35 Only</div>
-    <div class="btn-box">
-      <a href="details.html?id=illustrator" class="btn details">Details</a>
-      <a href="#" class="btn buy">Buy Now</a>
+      <a onclick="openPayModal('Filmora Plugins')" class="btn buy">Buy Now</a>
     </div>
   </div>
 
@@ -157,18 +158,29 @@
     <div class="price">₹45 Only</div>
     <div class="btn-box">
       <a href="details.html?id=photoshop" class="btn details">Details</a>
-      <a href="#" class="btn buy">Buy Now</a>
+      <a onclick="openPayModal('Photoshop Tools')" class="btn buy">Buy Now</a>
     </div>
   </div>
 
-  <!-- CANVA -->
+  <!-- ILLUSTRATOR -->
+  <div class="card">
+    <img src="/uploads/illustrator.png">
+    <div class="name">Illustrator ToolPack</div>
+    <div class="price">₹39 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=illustrator" class="btn details">Details</a>
+      <a onclick="openPayModal('Illustrator ToolPack')" class="btn buy">Buy Now</a>
+    </div>
+  </div>
+
+  <!-- CANVA PRO -->
   <div class="card">
     <img src="/uploads/canava.png">
     <div class="name">Canva Pro Templates</div>
     <div class="price">₹39 Only</div>
     <div class="btn-box">
       <a href="details.html?id=canva" class="btn details">Details</a>
-      <a href="#" class="btn buy">Buy Now</a>
+      <a onclick="openPayModal('Canva Pro Templates')" class="btn buy">Buy Now</a>
     </div>
   </div>
 
@@ -179,11 +191,143 @@
     <div class="price">₹29 Only</div>
     <div class="btn-box">
       <a href="details.html?id=picsart" class="btn details">Details</a>
-      <a href="#" class="btn buy">Buy Now</a>
+      <a onclick="openPayModal('PicsArt Kits')" class="btn buy">Buy Now</a>
+    </div>
+  </div>
+
+  <!-- DAVINCI RESOLVE -->
+  <div class="card">
+    <img src="/uploads/davinci.png">
+    <div class="name">DaVinci Resolve LUTs</div>
+    <div class="price">₹49 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=davinci" class="btn details">Details</a>
+      <a onclick="openPayModal('DaVinci Resolve LUT Pack')" class="btn buy">Buy Now</a>
+    </div>
+  </div>
+
+  <!-- LIGHTROOM -->
+  <div class="card">
+    <img src="/uploads/lightroom.png">
+    <div class="name">Lightroom Presets</div>
+    <div class="price">₹25 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=lightroom" class="btn details">Details</a>
+      <a onclick="openPayModal('Lightroom Presets')" class="btn buy">Buy Now</a>
+    </div>
+  </div>
+
+  <!-- LOTTIE FILES -->
+  <div class="card">
+    <img src="/uploads/lottie.png">
+    <div class="name">Lottie Animation Pack</div>
+    <div class="price">₹29 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=lottie" class="btn details">Details</a>
+      <a onclick="openPayModal('Lottie Animation Pack')" class="btn buy">Buy Now</a>
+    </div>
+  </div>
+
+  <!-- BLENDER -->
+  <div class="card">
+    <img src="/uploads/blender.png">
+    <div class="name">Blender 3D Assets</div>
+    <div class="price">₹69 Only</div>
+    <div class="btn-box">
+      <a href="details.html?id=blender" class="btn details">Details</a>
+      <a onclick="openPayModal('Blender 3D Assets')" class="btn buy">Buy Now</a>
     </div>
   </div>
 
 </div>
+
+<!-- Payment Modal (Same as OTT page) -->
+<div id="payModal" class="pay-modal">
+  <div class="pay-box">
+    
+    <button class="close-pay" onclick="closePayModal()">✖</button>
+
+    <h2>Complete Your Payment</h2>
+    <p>Product: <span id="payProductName" style="color:#ff0000;font-weight:700;"></span></p>
+
+    <h3>UPI Payment</h3>
+    <div class="upi-box">
+      <p>Scan & Pay:</p>
+      <img src="/uploads/QR.png" class="qr-img">
+
+      <p>OR Pay to UPI ID:</p>
+      <div class="upi-id">yourupi@okaxis</div>
+
+      <button class="copy-btn" onclick="copyUPI()">Copy UPI ID</button>
+    </div>
+
+    <h3>After Payment</h3>
+    <p>Click below to send screenshot:</p>
+
+    <a id="whatsAppLink" class="wa-btn" target="_blank">Send on WhatsApp</a>
+
+  </div>
+</div>
+
+<style>
+  .pay-modal {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.8);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index: 9999;
+  }
+  .pay-box {
+    background:#111;
+    padding:30px;
+    width:90%; max-width:400px;
+    border-radius:20px;
+    border:1px solid #ff0000;
+    text-align:center;
+  }
+  .qr-img { width:180px; border-radius:10px; }
+  .upi-id {
+    background:#222; padding:8px;
+    margin:10px auto;
+    border-radius:8px;
+    font-size:16px; font-weight:600;
+  }
+  .copy-btn {
+    background:#ff0000; padding:8px 14px;
+    border:none; color:white;
+    border-radius:6px; cursor:pointer;
+  }
+  .wa-btn {
+    display:block; margin-top:20px;
+    background:#25D366;
+    padding:12px; color:white;
+    font-weight:700; border-radius:8px;
+    text-decoration:none;
+  }
+</style>
+
+<script>
+  function openPayModal(productName) {
+    document.getElementById("payModal").style.display = "flex";
+    document.getElementById("payProductName").innerText = productName;
+    document.getElementById("whatsAppLink").href =
+      "https://wa.me/919837777006?text=I paid for " +
+      encodeURIComponent(productName) +
+      ". Please activate.";
+  }
+
+  function closePayModal() {
+    document.getElementById("payModal").style.display = "none";
+  }
+
+  function copyUPI() {
+    navigator.clipboard.writeText("yourupi@okaxis");
+    alert("UPI ID Copied!");
+  }
+</script>
 
 </body>
 </html>

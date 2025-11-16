@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Premium Courses – OTT WALLAH</title>
 
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+
   <style>
     body {
       background: #0d0d0d;
@@ -13,141 +15,220 @@
       color: white;
     }
 
+    /* HEADER */
     .header {
       background: #121212;
-      padding: 20px;
+      padding: 20px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 2px solid #ff0037;
+      position: sticky;
+      top: 0;
+      z-index: 999;
     }
-
     .logo {
       color: #ff0037;
-      font-size: 24px;
-      font-weight: 700;
+      font-size: 28px;
+      font-weight: 900;
     }
-
     .nav a {
-      margin-left: 20px;
+      margin-left: 25px;
       color: white;
       text-decoration: none;
       font-size: 16px;
+      font-weight: 500;
     }
+    .nav a:hover { color: #ff0037; }
 
+    /* TITLE */
     .title {
       text-align: center;
       margin-top: 40px;
-      font-size: 40px;
-      font-weight: 700;
+      font-size: 45px;
+      font-weight: 900;
       color: #ff0037;
     }
-
     .subtitle {
       text-align: center;
       margin-top: 10px;
       color: #bbbbbb;
-      font-size: 18px;
+      font-size: 19px;
     }
 
+    /* COURSES GRID */
     .course-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      padding: 40px;
-      max-width: 1300px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 50px;
+      max-width: 1500px;
       margin: auto;
     }
 
     .course-card {
-      background: #1a1a1a;
-      border-radius: 10px;
+      background: #161616;
+      border-radius: 14px;
       padding: 15px;
-      box-shadow: 0 0 10px #ff0037a6;
-      transition: 0.3s;
+      box-shadow: 0 0 20px rgba(255, 0, 55, 0.25);
       cursor: pointer;
+      transition: 0.3s;
+      overflow: hidden;
+      border: 1px solid #242424;
     }
-
     .course-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #ff0037;
+      transform: translateY(-10px);
+      border-color: #ff0037;
+      box-shadow: 0 0 40px rgba(255, 0, 55, 0.45);
     }
 
     .course-card img {
       width: 100%;
-      height: 150px;
-      object-fit: contain;
-      border-radius: 10px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
     }
-
     .course-title {
-      margin-top: 10px;
-      font-size: 18px;
-      font-weight: 600;
+      margin-top: 12px;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+    }
+    .course-small {
+      color: #bbbbbb;
+      font-size: 14px;
+      margin-top: 4px;
     }
 
     .buy-btn {
-      margin-top: 10px;
+      margin-top: 12px;
       display: inline-block;
       background: #ff0037;
-      padding: 8px 15px;
-      border-radius: 6px;
+      padding: 10px 16px;
+      border-radius: 8px;
       color: white;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
       transition: 0.3s;
     }
-
-    .buy-btn:hover {
-      background: #d6002f;
-    }
+    .buy-btn:hover { background: #d6002f; }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="logo">OTT WALLAH</div>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="ott.html">OTT Apps</a>
-      <a href="courses.html">Courses</a>
-      <a href="editing.html">Editing Tools</a>
-    </nav>
-  </header>
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">OTT WALLAH</div>
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="ott.html">OTT Apps</a>
+    <a href="courses.html">Courses</a>
+    <a href="editing.html">Editing Tools</a>
+  </nav>
+</header>
 
-  <h1 class="title">Premium Courses</h1>
-  <p class="subtitle">Build skills with Coursera, Udemy, LinkedIn Learning & More</p>
+<h1 class="title">Premium Courses</h1>
+<p class="subtitle">Top-quality learning content — PW • Udemy • Coursera • Coding Ninjas • Finance • Editing</p>
 
-  <!-- COURSES GRID -->
-  <div class="course-container">
+<!-- GRID -->
+<div class="course-container">
 
-    <div class="course-card">
-      <img src="uploads/Course1.png" />
-      <div class="course-title">Graphic Designing Complete Course</div>
-      <a href="details.html?course=graphic" class="buy-btn">View Details</a>
-    </div>
-
-    <div class="course-card">
-      <img src="uploads/Course2.png" />
-      <div class="course-title">Video Editing Masterclass</div>
-      <a href="details.html?course=editing" class="buy-btn">View Details</a>
-    </div>
-
-    <div class="course-card">
-      <img src="uploads/Course3.png" />
-      <div class="course-title">Freelancing Mastery Training</div>
-      <a href="details.html?course=freelancing" class="buy-btn">View Details</a>
-    </div>
-
-    <div class="course-card">
-      <img src="uploads/Course4.png" />
-      <div class="course-title">Digital Marketing A–Z</div>
-      <a href="details.html?course=marketing" class="buy-btn">View Details</a>
-    </div>
-
+  <!-- BASE 4 COURSES -->
+  <div class="course-card">
+    <img src="uploads/Course1.png">
+    <div class="course-title">Graphic Designing Complete Course</div>
+    <div class="course-small">From Beginner to Advance</div>
+    <a href="details.html?course=graphic" class="buy-btn">View Details</a>
   </div>
+
+  <div class="course-card">
+    <img src="uploads/Course2.png">
+    <div class="course-title">Video Editing Masterclass</div>
+    <div class="course-small">Editing + Reels + YouTube</div>
+    <a href="details.html?course=editing" class="buy-btn">View Details</a>
+  </div>
+
+  <div class="course-card">
+    <img src="uploads/Course3.png">
+    <div class="course-title">Freelancing Mastery Training</div>
+    <div class="course-small">Upwork • Fiverr • Strategies</div>
+    <a href="details.html?course=freelancing" class="buy-btn">View Details</a>
+  </div>
+
+  <div class="course-card">
+    <img src="uploads/Course4.png">
+    <div class="course-title">Digital Marketing A–Z Course</div>
+    <div class="course-small">SEO • Ads • Content</div>
+    <a href="details.html?course=marketing" class="buy-btn">View Details</a>
+  </div>
+
+  <!-- NEW PREMIUM COURSES (20+) -->
+
+  <div class="course-card">
+    <img src="uploads/pw.jpeg">
+    <div class="course-title">Physics Wallah Full Courses</div>
+    <div class="course-small">JEE • NEET • UPSC • Coding</div>
+    <a href="details.html?course=pw" class="buy-btn">View Details</a>
+  </div>
+
+  <div class="course-card">
+    <img src="uploads/coding-ninjas.jpeg">
+    <div class="course-title">Coding Ninjas DSA + Web Dev</div>
+    <div class="course-small">C++ • Java • Python</div>
+    <a href="details.html?course=ninjas" class="buy-btn">View Details</a>
+  </div>
+
+  <div class="course-card">
+    <img src="uploads/udemy.jpeg">
+    <div class="course-title">Udemy All Access Pack</div>
+    <div class="course-small">60+ Paid Courses</div>
+    <a href="details.html?course=udemy" class="buy-btn">View Details</a>
+  </div>
+
+  <div class="course-card">
+    <img src="uploads/coursera.jpeg">
+    <div class="course-title">Coursera Professional Courses</div>
+    <div class="course-small">Google • Meta • IBM</div>
+    <a href="details.html?course=coursera" class="buy-btn">View Details</a>
+  </div>
+
+  <div class="course-card">
+    <img src="uploads/canva.jpeg">
+    <div class="course-title">Canva Pro Master Course</div>
+    <div class="course-small">Branding + Designing</div>
+    <a href="details.html?course=canva" class="buy-btn">View Details</a>
+  </div>
+
+  <div class="course-card">
+    <img src="uploads/python.jpeg">
+    <div class="course-title">Python Zero to Hero</div>
+    <div class="course-small">Coding + Projects</div>
+    <a href="details.html?course=python" class="buy-btn">View Details</a>
+  </div>
+
+  <div class="course-card">
+    <img src="uploads/ml.jpeg">
+    <div class="course-title">Machine Learning + AI Course</div>
+    <div class="course-small">ML • AI • Deep Learning</div>
+    <a href="details.html?course=ml" class="buy-btn">View Details</a>
+  </div>
+
+  <div class="course-card">
+    <img src="uploads/excel.jpeg">
+    <div class="course-title">Excel + Power BI Advanced</div>
+    <div class="course-small">Data Analysis</div>
+    <a href="details.html?course=excel" class="buy-btn">View Details</a>
+  </div>
+
+  <div class="course-card">
+    <img src="uploads/stock.jpeg">
+    <div class="course-title">Stock Market + Trading</div>
+    <div class="course-small">Swing • Intraday • Options</div>
+    <a href="details.html?course=stock" class="buy-btn">View Details</a>
+  </div>
+
+</div>
 
 </body>
 </html>
